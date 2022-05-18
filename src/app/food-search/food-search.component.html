@@ -1,0 +1,16 @@
+<div id="search-component">
+  <input
+    placeholder="Search ticket here..."
+    #searchBox
+    id="search-box"
+    (input)="search(searchBox.value)"
+  />
+
+  <ul class="search-result">
+    <li *ngFor="let guest of guests$ | async">
+      <a routerLink="/detail/{{ guest.id }}">
+        {{ guest.name }}
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,18 @@
+<!-- Toolbar -->
+<div class="header-section" style="text-align: center">
+  <h1>{{ title | uppercase }}</h1>
+</div>
+
+<div
+  class="nav-bar"
+  style="text-align: center; margin-top: 30px; margin-bottom: 20px"
+>
+  <nav>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/guests">Tickets</a>
+    <a routerLink="/foods">Foods</a>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>
+<app-message-sys></app-message-sys>

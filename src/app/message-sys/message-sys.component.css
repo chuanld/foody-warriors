@@ -1,0 +1,49 @@
+/* MessagesComponent's private CSS styles */
+.messages {
+  position: fixed;
+  top: 700px;
+  right: 5%;
+  border-radius: 5px;
+  border: 2px solid #eee;
+
+  box-shadow: 5px 5px 10px 5px #ddd;
+  width: 500px;
+  max-height: 270px;
+  overflow-y: auto;
+  background: transparent !important;
+}
+.message-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(to right, #7a7fba, #11c37c);
+  z-index: 1;
+  padding: 0 10px;
+}
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+.clear {
+  color: #333;
+  background-color: #eee;
+  /* margin-bottom: 12px; */
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-left: 50px;
+}
+.clear:hover {
+  color: white;
+  background-color: #42545c;
+}
+
+@media only screen and (max-width: 860px) {
+  .messages {
+    display: none;
+  }
+}

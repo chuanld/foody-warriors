@@ -1,0 +1,38 @@
+<div class="foods">
+  <div class="foods-heading">
+    <span>Manage Foods</span>
+  </div>
+  <div class="foods-container">
+    <div class="foods-list">
+      <div class="foods-list-title">
+        <span>List Foods</span>
+      </div>
+      <ul>
+        <li *ngFor="let food of foods">
+          <a>
+            <span class="badge" (click)="onSelectFood(food)">{{
+              food.id
+            }}</span>
+            {{ food.name }}
+          </a>
+          <button
+            type="button"
+            class="delete"
+            title="delete food"
+            (click)="delete(food)"
+          >
+            x
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <app-food-form
+        (isClickSubmit)="clickSubmit($event)"
+        (isClickEditSubmit)="clickEditSubmit($event)"
+        [foods]="foods"
+        [foodIsSelect]="food"
+      ></app-food-form>
+    </div>
+  </div>
+</div>

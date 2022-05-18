@@ -1,0 +1,25 @@
+h1 {
+  margin-bottom: 0;
+}
+nav a {
+  padding: 1rem;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #3d3d3d;
+  border-radius: 5px;
+}
+.nav-bar nav a {
+  margin: 0 10px;
+  font-style: bold;
+  font-size: 18px;
+}
+nav a:hover {
+  color: white;
+  transition: ease-in-out 0.2s;
+  background-color: #42545c;
+}
+nav a.active {
+  background-color: black;
+}

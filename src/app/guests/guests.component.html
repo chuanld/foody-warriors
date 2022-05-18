@@ -1,0 +1,33 @@
+<div class="guests">
+  <div class="guests-heading">
+    <span>Manage Ticket</span>
+  </div>
+  <div class="guests-container">
+    <div class="guests-list">
+      <div class="guests-list-title">
+        <span>List Ticket</span>
+      </div>
+      <ul>
+        <li *ngFor="let guest of guests">
+          <a routerLink="/detail/{{ guest.id }}">
+            <span class="badge">{{ guest.id }}</span> {{ guest.name }}
+          </a>
+          <button
+            type="button"
+            class="delete"
+            title="delete guest"
+            (click)="delete(guest)"
+          >
+            x
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <app-guest-form
+        (isClickSubmit)="clickSubmit($event)"
+        [foods]="foods"
+      ></app-guest-form>
+    </div>
+  </div>
+</div>

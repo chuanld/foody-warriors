@@ -1,0 +1,142 @@
+.foods {
+  margin: 0 0 2em 0;
+
+  padding: 0;
+}
+.foods .foods-heading {
+  text-align: center;
+  color: crimson;
+  font-size: 25px;
+}
+.foods .foods-list .foods-list-title {
+  text-align: center;
+  color: #bdae29;
+  font-size: 20px;
+  font-weight: 900;
+}
+.foods h2 {
+  text-align: center;
+}
+
+.foods .foods-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: auto;
+  width: 800px;
+}
+.foods .foods-list {
+  /* width: fit-content; */
+  min-width: 188px;
+}
+.foods .foods-list ul {
+  list-style-type: none;
+  width: 100%;
+  margin-left: -20px;
+}
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  box-sizing: border-box;
+}
+
+.foods li {
+  position: relative;
+  cursor: pointer;
+  margin: 16px 0;
+}
+
+.foods li:hover {
+  left: 0.1em;
+}
+
+.foods .foods-list a {
+  color: #333;
+  text-decoration: none;
+  background-color: #eee;
+  margin: 0.5em;
+  padding: 0.3em 0;
+  height: 2em;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+}
+.foods .foods-list a span {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.foods a:hover {
+  color: #2c3a41;
+  background-color: #e6e6e6;
+}
+
+.foods a:active {
+  background-color: #525252;
+  color: #fafafa;
+}
+
+.foods .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 1em 0.7em 0 0.7em;
+  background-color: #aa8c09;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 2.1em;
+  min-width: 16px;
+  text-align: right;
+  margin-right: 0.8em;
+  border-radius: 4px 0 0 4px;
+}
+
+.add-button {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.add-button:hover {
+  color: white;
+  background-color: #42545c;
+}
+
+button.delete {
+  position: absolute;
+
+  right: -15px;
+  top: -5px;
+
+  color: #525252;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 1px 7px 3px 7px;
+  border: none;
+  border-radius: 50%;
+  background-color: #eee;
+  font-size: 13px;
+}
+
+button.delete:hover {
+  transition: ease-in-out 0.2s;
+  background-color: #525252;
+  color: #fff;
+}
+
+@media only screen and (max-width: 860px) {
+  .foods .foods-container {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    width: auto;
+  }
+  .foods .foods-list {
+    width: 100px;
+  }
+}

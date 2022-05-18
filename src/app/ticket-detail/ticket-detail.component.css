@@ -1,0 +1,71 @@
+label {
+  color: #435960;
+  font-weight: bold;
+}
+input,
+select {
+  font-size: 1em;
+  padding: 0.5rem;
+}
+button {
+  margin-top: 20px;
+  margin-right: 0.5rem;
+  background-color: teal;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #ccc;
+  cursor: auto;
+}
+.guest-detail {
+  width: 800px;
+  margin: 10px auto;
+}
+.guest-detail .guest-detail-heading {
+  text-align: center;
+}
+.guest-detail-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.guest-detail-info .guest-info {
+  flex-basis: 300px;
+  width: fit-content;
+  background-color: aliceblue;
+  padding: 0 10px;
+  padding-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px 2px #ddd;
+}
+.guest-detail-info .guest-edit {
+  flex-basis: 370px;
+  width: fit-content;
+}
+.guest-detail-info .guest-detail-info-show,
+.guest-detail-info .guest-detail-edit-show {
+  width: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.guest-detail-info .guest-detail-edit-show {
+  margin-bottom: 20px;
+}
+.guest-detail-info .guest-detail-info-show label,
+.guest-detail-info .guest-detail-edit-show label {
+  flex-basis: 120px;
+}
+
+.guest-info-submit-btn {
+  text-align: center;
+}

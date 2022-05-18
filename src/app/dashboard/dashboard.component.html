@@ -1,0 +1,19 @@
+<app-food-search></app-food-search>
+<div class="dash-board">
+  <div class="top-food">
+    <h2>Top Food</h2>
+    <div class="heroes-menu">
+      <!-- <a *ngFor="let food of foods" routerLink="/detail/{{ hero.id }}">
+            {{ hero.name }}
+          </a> -->
+      <a
+        *ngFor="let food of foods"
+        routerLink="/guests/{{ food.id }}"
+        (click)="onClickFood(food.id)"
+      >
+        {{ food.name }}
+      </a>
+    </div>
+  </div>
+  <div class="result-ticket"></div>
+</div>

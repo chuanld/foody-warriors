@@ -1,0 +1,55 @@
+h2 {
+  text-align: center;
+}
+.dash-board {
+  margin-top: 50px;
+}
+.heroes-menu {
+  padding: 0;
+  margin: auto;
+  max-width: 1000px;
+
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  /* align-items: flex-start; */
+}
+
+a {
+  background-color: #3f525c;
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  min-width: 70px;
+  margin: 0.5rem 10px;
+  box-sizing: border-box;
+  height: 40px;
+  justify-self: flex-start;
+
+  /* flexbox */
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}
+
+@media (min-width: 600px) {
+  a {
+    width: 18%;
+    box-sizing: content-box;
+  }
+}
+
+a:hover {
+  transition: ease-in 0.3s;
+  transform: scaleY(1.2);
+
+  background-color: #000;
+}
