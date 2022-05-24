@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class FoodService {
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    // headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   constructor(
     private http: HttpClient,
@@ -17,6 +17,10 @@ export class FoodService {
   ) {}
 
   private foodsUrl = 'api/storedFoods'; // URL to web api
+  getTestFoods(): Observable<Food[]> {
+    return this.http.get<Food[]>(this.foodsUrl);
+    // .subscribe((data) => console.log(data, 'data'));
+  }
   getFoods(): Observable<Food[]> {
     return this.http.get<Food[]>(this.foodsUrl).pipe(
       tap((foods) => {
@@ -28,7 +32,7 @@ export class FoodService {
   }
   addFood(food: Food): Observable<Food> {
     return this.http.post<Food>(this.foodsUrl, food, this.httpOptions).pipe(
-      tap((newFood: Food) => this.log(`Add food w/ id=${newFood.id}`)),
+      tap((newFood: Food) => this.log(`Add food:${newFood.name}`)),
       catchError(this.handleError<Food>('add-food'))
     );
   }
@@ -42,7 +46,7 @@ export class FoodService {
     const url = `${this.foodsUrl}/${id}`;
 
     return this.http.delete<Food>(url, this.httpOptions).pipe(
-      tap((_) => this.log(`Deleted food id=${id}`)),
+      tap((_) => this.log(`Deleted food id: ${id}`)),
       catchError(this.handleError<Food>('delete-food'))
     );
   }

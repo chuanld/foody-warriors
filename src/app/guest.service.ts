@@ -28,10 +28,10 @@ export class GuestService {
     return this.http.get<Guest[]>(`${this.guestsUrl}/?name=${term}`).pipe(
       tap((x) =>
         x.length
-          ? this.log(`Found heroes matching "${term}"`)
-          : this.log(`No heroes matching "${term}"`)
+          ? this.log(`Found guests matching "${term}"`)
+          : this.log(`No guests matching "${term}"`)
       ),
-      catchError(this.handleError<Guest[]>('search-hero', []))
+      catchError(this.handleError<Guest[]>('search-guests', []))
     );
   }
 
@@ -54,7 +54,7 @@ export class GuestService {
   }
   addGuest(guest: Guest): Observable<Guest> {
     return this.http.post<Guest>(this.guestsUrl, guest, this.httpOptions).pipe(
-      tap((newGuest: Guest) => this.log(`added hero w/ id=${newGuest.id}`)),
+      tap((newGuest: Guest) => this.log(`added guest id=${newGuest.id}`)),
       catchError(this.handleError<Guest>('add-guest'))
     );
   }
@@ -75,15 +75,19 @@ export class GuestService {
 
   //Func Sys
   private log(message: string) {
-    this.messageSysService.addMess(`HeroService: ${message}`);
+    this.messageSysService.addMess(`GuestService: ${message}`);
   }
-  private saveLocalStorage(heroes) {
-    localStorage.setItem('heroes', JSON.stringify(heroes));
+  private saveLocalStorage(guests) {
+    localStorage.setItem('guests', JSON.stringify(guests));
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      if (error.error instanceof Error) {
+        console.error(`Client-side error:  ${error.error.message}`); // log to console instead
+      } else {
+        console.error(`Server-side error:  ${error.status} - ${error.error}`);
+      }
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

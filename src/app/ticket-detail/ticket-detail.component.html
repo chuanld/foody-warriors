@@ -4,60 +4,6 @@
   </div>
 
   <div class="guest-detail-info">
-    <div class="guest-info">
-      <div class="guest-detail-info-show">
-        <label>id: </label>
-        <p>{{ guest.id }}</p>
-      </div>
-      <div class="guest-detail-info-show">
-        <label for="guest-name">Guest Name: </label>
-        <p>{{ guest.name }}</p>
-      </div>
-      <div class="guest-detail-info-show">
-        <label for="guest-order">Order: </label>
-        <div *ngIf="guest.order != 0 && guest.order; else elseBlock1">
-          <div *ngFor="let food of foods">
-            <p *ngIf="food.id == guest.order">
-              {{ food.name }}
-            </p>
-          </div>
-        </div>
-        <ng-template #elseBlock1
-          ><div>
-            <p><i>Updating...</i></p>
-          </div></ng-template
-        >
-      </div>
-      <div class="guest-detail-info-show">
-        <label for="guest-order">SubOrder: </label>
-        <div *ngIf="guest.subOrder != 0 && guest.subOrder; else elseBlock1">
-          <div *ngFor="let food of foods">
-            <p *ngIf="food.id == guest.subOrder">
-              {{ food.name }}
-            </p>
-          </div>
-        </div>
-        <ng-template #elseBlock1
-          ><div>
-            <p><i>Updating...</i></p>
-          </div></ng-template
-        >
-      </div>
-      <!-- <div class="guest-detail-info-show">
-          <label for="guest-attack">guest Attack: </label>
-          <p *ngIf="guest.attack; else elseBlock">{{ guest.attack }}</p>
-          <ng-template #elseBlock
-            ><p><i>Updating...</i></p></ng-template
-          >
-        </div> -->
-      <!-- <div class="guest-detail-info-show">
-          <label for="guest-defence">guest Defence: </label>
-          <p *ngIf="guest.defence; else elseBlock">{{ guest.defence }}</p>
-          <ng-template #elseBlock
-            ><p><i>Updating...</i></p></ng-template
-          >
-        </div> -->
-    </div>
     <div class="guest-edit">
       <div class="guest-detail-edit-show">
         <label>id: </label>
@@ -113,9 +59,55 @@
         />
       </div> -->
     </div>
+    <div class="guest-info">
+      <div class="guest-detail-info-show">
+        <label>id: </label>
+        <p>{{ guest.id }}</p>
+      </div>
+      <div class="guest-detail-info-show">
+        <label for="guest-name">Guest Name: </label>
+        <p>{{ guest.name }}</p>
+      </div>
+      <div class="guest-detail-info-show">
+        <label for="guest-order">Order: </label>
+        <div *ngIf="guest.order != 0 && guest.order; else elseBlock1">
+          <div *ngFor="let food of foods">
+            <p *ngIf="food.id == guest.order">
+              {{ food.name }}
+            </p>
+          </div>
+        </div>
+        <ng-template #elseBlock1
+          ><div>
+            <p><i>Updating...</i></p>
+          </div></ng-template
+        >
+      </div>
+      <div class="guest-detail-info-show">
+        <label for="guest-order">SubOrder: </label>
+        <div *ngIf="guest.subOrder != 0 && guest.subOrder; else elseBlock1">
+          <div *ngFor="let food of foods">
+            <p *ngIf="food.id == guest.subOrder">
+              {{ food.name }}
+            </p>
+          </div>
+        </div>
+        <ng-template #elseBlock1
+          ><div>
+            <p><i>Updating...</i></p>
+          </div></ng-template
+        >
+      </div>
+    </div>
   </div>
   <div class="guest-info-submit-btn">
-    <button type="button" (click)="save()">save</button>
+    <button
+      type="button"
+      (click)="save()"
+      [disabled]="guest.name == '' || guest.order == 0"
+    >
+      save
+    </button>
     <button type="button" (click)="goBack()">back</button>
   </div>
 </div>

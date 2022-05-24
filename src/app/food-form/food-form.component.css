@@ -35,5 +35,8 @@ button {
   color: #fff;
 }
 button:hover {
-  background-color: #ddd;
+  background-color: rgb(13, 121, 121);
+}
+button.isDisabled {
+  background-color: #ddd !important;
 }

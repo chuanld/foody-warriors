@@ -2,7 +2,8 @@
 
 ## Demo uses:
 
-    - FormBuilder
+    - Reactive Form
+    - Template Form
     - HttpClient
 
 ## Service:

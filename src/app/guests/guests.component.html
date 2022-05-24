@@ -3,7 +3,7 @@
     <span>Manage Ticket</span>
   </div>
   <div class="guests-container">
-    <div class="guests-list">
+    <!-- <div class="guests-list">
       <div class="guests-list-title">
         <span>List Ticket</span>
       </div>
@@ -22,12 +22,72 @@
           </button>
         </li>
       </ul>
-    </div>
+    </div> -->
     <div>
       <app-guest-form
         (isClickSubmit)="clickSubmit($event)"
         [foods]="foods"
       ></app-guest-form>
     </div>
+  </div>
+  <div class="container">
+    <!-- <div class="row">
+      <div class="col"> -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Order</th>
+          <th>Sub Order</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-guest [ngForOf]="guests">
+          <tr>
+            <td>{{ guest.id }}</td>
+            <td>{{ guest.name }}</td>
+            <ng-template [ngIf]="guest.order * 1 >= 1" [ngIfElse]="elseOrder"
+              ><ng-template ngFor let-food [ngForOf]="foods">
+                <td *ngIf="food.id == guest.order">{{ food.name }}</td>
+              </ng-template></ng-template
+            >
+            <ng-template #elseOrder
+              ><td>
+                <i>None</i>
+              </td></ng-template
+            >
+            <ng-template
+              [ngIf]="guest.subOrder * 1 >= 1"
+              [ngIfElse]="elseSubOrder"
+            >
+              <ng-template ngFor let-food [ngForOf]="foods">
+                <td *ngIf="food.id == guest.subOrder">
+                  {{ food.name }}
+                </td>
+              </ng-template>
+            </ng-template>
+            <ng-template #elseSubOrder
+              ><td>
+                <i>None</i>
+              </td></ng-template
+            >
+            <td>
+              <div class="row">
+                <button class="btn-edit">
+                  <a routerLink="/detail/{{ guest.id }}">Edit</a>
+                </button>
+                <button class="btn-remove" (click)="delete(guest)">
+                  Remove
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <!-- </div>
+    </div> -->
   </div>
 </div>

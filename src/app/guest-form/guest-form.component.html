@@ -22,11 +22,11 @@
         class="form-control"
         id="order"
         formControlName="order"
-        required
         *ngIf="foods.length > 0"
         style="font-style: italic"
+        required
       >
-        <option value="0">
+        <option value="">
           <p><i>--select food--</i></p>
         </option>
         <option *ngFor="let food of foods" [value]="food.id">
@@ -50,8 +50,16 @@
         </option>
       </select>
     </div>
-
-    <button type="submit" class="btn btn-success">Submit</button>
+    <div class="submit">
+      <button
+        [disabled]="!formValues.valid"
+        type="submit"
+        class="btn btn-success"
+        [class.isDisable]="!formValues.valid"
+      >
+        Submit
+      </button>
+    </div>
 
     &nbsp;&nbsp;
 

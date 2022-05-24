@@ -8,6 +8,7 @@ import { MessageSysService } from '../message-sys.service';
 })
 export class MessageSysComponent implements OnInit, OnChanges {
   timeInfo: number = 5;
+  public isShow: boolean = false;
   constructor(public messageSysService: MessageSysService) {}
 
   ngOnInit(): void {}
@@ -26,5 +27,9 @@ export class MessageSysComponent implements OnInit, OnChanges {
         this.messageSysService.messages.length
       );
     }, 5000);
+  }
+
+  toggleMessage() {
+    this.isShow = !this.isShow;
   }
 }

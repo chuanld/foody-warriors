@@ -51,7 +51,14 @@
         </select>
       </div> -->
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!formValues.valid"
+      [class.isDisabled]="!formValues.valid"
+    >
+      Submit
+    </button>
 
     &nbsp;&nbsp;
 
@@ -93,7 +100,14 @@
         />
       </div>
 
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!formEditValue.valid"
+        [class.isDisabled]="!formEditValue.valid"
+      >
+        Submit
+      </button>
 
       &nbsp;&nbsp;
     </form>

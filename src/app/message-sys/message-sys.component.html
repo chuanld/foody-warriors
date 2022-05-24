@@ -1,4 +1,4 @@
-<div *ngIf="messageSysService.messages.length" class="messages">
+<div *ngIf="messageSysService.messages.length && isShow" class="messages">
   <div class="message-heading">
     <h2>Messages</h2>
     <button type="button" class="clear" (click)="messageSysService.clear()">
@@ -10,4 +10,10 @@
       ><i>Message will remove after {{ timeInfo }} s</i></span
     > -->
   <div *ngFor="let message of messageSysService.messages">{{ message }}</div>
+</div>
+<div class="show-message">
+  <button class="btn-show-message" (click)="toggleMessage()">💌</button>
+  <p *ngIf="messageSysService.messages.length > 0" class="description-message">
+    {{ messageSysService.messages.length }}
+  </p>
 </div>

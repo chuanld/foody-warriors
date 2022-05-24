@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { Food } from '../food';
 import { FoodService } from '../food.service';
 import { Guest } from '../guest';
@@ -10,9 +10,10 @@ import { GuestService } from '../guest.service';
   templateUrl: './guests.component.html',
   styleUrls: ['./guests.component.css'],
 })
-export class GuestsComponent implements OnInit {
+export class GuestsComponent implements OnInit, OnDestroy {
   guests: Guest[] = [];
   foods: Food[] = [];
+  subscription: Subscription;
 
   constructor(
     private guestService: GuestService,
@@ -20,6 +21,7 @@ export class GuestsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getFoodTest();
     this.getData();
   }
 
@@ -28,12 +30,14 @@ export class GuestsComponent implements OnInit {
     let foods = this.foodService.getFoods();
     let guests = this.guestService.getGuestsData();
 
-    forkJoin([foods, guests]).subscribe(([foods, guests]) => {
-      this.foods = foods;
-      localStorage.setItem('foods', JSON.stringify(foods));
-      this.guests = guests;
-      localStorage.setItem('guests', JSON.stringify(guests));
-    });
+    this.subscription = forkJoin([foods, guests]).subscribe(
+      ([foods, guests]) => {
+        this.foods = foods;
+        localStorage.setItem('foods', JSON.stringify(foods));
+        this.guests = guests;
+        localStorage.setItem('guests', JSON.stringify(guests));
+      }
+    );
   }
 
   //CRUD
@@ -48,9 +52,9 @@ export class GuestsComponent implements OnInit {
   }
   delete(guest: Guest): void {
     this.guests = this.guests.filter((h) => h !== guest);
-    this.guestService.deleteGuest(guest.id).subscribe();
+    this.subscription = this.guestService.deleteGuest(guest.id).subscribe();
     localStorage.setItem(
-      'heroes',
+      'guests',
       JSON.stringify(
         this.guestService
           .getGuestsData()
@@ -61,9 +65,21 @@ export class GuestsComponent implements OnInit {
 
   //submit
   clickSubmit(newGuest: Guest) {
-    this.guestService.addGuest(newGuest).subscribe((guest) => {
-      this.guests.push(guest);
-    });
+    this.subscription = this.guestService
+      .addGuest(newGuest)
+      .subscribe((guest) => {
+        this.guests.push(guest);
+      });
     this.getData();
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  getFoodTest(): void {
+    this.subscription = this.foodService
+      .getTestFoods()
+      .subscribe((data) => console.log(data));
   }
 }

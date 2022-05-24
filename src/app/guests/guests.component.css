@@ -20,7 +20,7 @@
 
 .guests .guests-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 10px;
   margin: auto;
   width: 800px;
@@ -139,4 +139,50 @@ button.delete:hover {
   .guest .guests-list {
     width: 100px;
   }
+}
+.guests .container {
+  width: 1000px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+.guests .container table,
+th,
+td {
+  border: 1px solid;
+  padding: 10px 10px;
+  border: none;
+}
+.guests .container table thead tr {
+  background-color: rgb(2, 89, 95);
+  color: #fff;
+}
+.guests .container table tr:nth-child(even) {
+  background: #e6e6e6;
+}
+.guests .container table tr:hover {
+  background-color: teal;
+  transition: ease-in 0.2s;
+  color: #fff;
+}
+.guests .container table {
+  width: 100%;
+  border: #ddd solid;
+  border-spacing: 2px;
+}
+.guests .container table .btn-edit {
+  background-color: rgb(31, 156, 156);
+  color: #fff;
+  font-size: 12px;
+}
+.guests .container table .btn-edit a {
+  text-decoration: none;
+  color: #fff;
+  font: 12px;
+  background-color: unset !important;
+}
+.guests .container table .btn-remove {
+  background-color: rgb(197, 75, 38);
+  color: #fff;
+  font-size: 12px;
 }

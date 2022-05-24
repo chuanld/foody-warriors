@@ -10,7 +10,25 @@
   width: 500px;
   max-height: 270px;
   overflow-y: auto;
-  background: transparent !important;
+  z-index: 1;
+  /* background: transparent !important; */
+}
+.show-message {
+  position: relative;
+}
+.show-message .btn-show-message {
+  position: fixed;
+  top: 850px;
+  right: 10px;
+}
+.show-message .description-message {
+  position: fixed;
+  top: 850px;
+  right: 35px;
+  z-index: 1;
+}
+.show-message .btn-show-message:hover {
+  background-color: #ddd;
 }
 .message-heading {
   display: flex;
