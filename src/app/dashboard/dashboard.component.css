@@ -53,3 +53,8 @@ a:hover {
 
   background-color: #000;
 }
+.dash-board app-loading {
+  position: relative;
+  top: -10px;
+  left: 50% !important;
+}

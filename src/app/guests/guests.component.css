@@ -186,3 +186,19 @@ td {
   color: #fff;
   font-size: 12px;
 }
+.guests .guests-container tbody {
+  position: relative;
+}
+.guests app-loading {
+  text-align: center !important;
+  /* background-color: red !important; */
+  position: relative !important;
+  left: 30rem;
+  /* width: 80px; */
+  top: -35px !important;
+  margin-top: -20px !important;
+}
+.guests .container table tbody tr.active {
+  background-color: teal;
+  color: #fff;
+}

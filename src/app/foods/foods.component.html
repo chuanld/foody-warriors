@@ -8,9 +8,9 @@
         <span>List Foods</span>
       </div>
       <ul>
-        <li *ngFor="let food of foods">
-          <a>
-            <span class="badge" (click)="onSelectFood(food)">{{
+        <li *ngFor="let food of foods; let idx = index">
+          <a [class.active]="idx === activeIndex">
+            <span class="badge" (click)="onSelectFood(food, idx)">{{
               food.id
             }}</span>
             {{ food.name }}
@@ -24,6 +24,9 @@
             x
           </button>
         </li>
+        <ng-template [ngIf]="isLoading">
+          <app-loading></app-loading>
+        </ng-template>
       </ul>
     </div>
     <div>

@@ -44,8 +44,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-template ngFor let-guest [ngForOf]="guests">
-          <tr>
+        <ng-template ngFor let-guest [ngForOf]="guests" let-idx="index">
+          <tr [class.active]="idx === activateIndex" (click)="onClickRow(idx)">
             <td>{{ guest.id }}</td>
             <td>{{ guest.name }}</td>
             <ng-template [ngIf]="guest.order * 1 >= 1" [ngIfElse]="elseOrder"
@@ -84,6 +84,9 @@
               </div>
             </td>
           </tr>
+        </ng-template>
+        <ng-template [ngIf]="isLoading">
+          <app-loading></app-loading>
         </ng-template>
       </tbody>
     </table>

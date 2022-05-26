@@ -14,6 +14,8 @@ export class GuestsComponent implements OnInit, OnDestroy {
   guests: Guest[] = [];
   foods: Food[] = [];
   subscription: Subscription;
+  isLoading: boolean = false;
+  activateIndex: number = 0;
 
   constructor(
     private guestService: GuestService,
@@ -27,6 +29,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
 
   //GetData
   getData(): void {
+    this.isLoading = true;
     let foods = this.foodService.getFoods();
     let guests = this.guestService.getGuestsData();
 
@@ -36,6 +39,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
         localStorage.setItem('foods', JSON.stringify(foods));
         this.guests = guests;
         localStorage.setItem('guests', JSON.stringify(guests));
+        this.isLoading = false;
       }
     );
   }
@@ -51,25 +55,23 @@ export class GuestsComponent implements OnInit, OnDestroy {
     // });
   }
   delete(guest: Guest): void {
-    this.guests = this.guests.filter((h) => h !== guest);
+    // this.guests = this.guests.filter((h) => h !== guest);
+    this.isLoading = true;
     this.subscription = this.guestService.deleteGuest(guest.id).subscribe();
     localStorage.setItem(
       'guests',
       JSON.stringify(
-        this.guestService
-          .getGuestsData()
-          .subscribe((guests) => (this.guests = guests))
+        this.guestService.getGuestsData().subscribe((guests) => {
+          this.guests = guests;
+          this.isLoading = false;
+        })
       )
     );
   }
 
   //submit
   clickSubmit(newGuest: Guest) {
-    this.subscription = this.guestService
-      .addGuest(newGuest)
-      .subscribe((guest) => {
-        this.guests.push(guest);
-      });
+    this.subscription = this.guestService.addGuest(newGuest).subscribe();
     this.getData();
   }
   ngOnDestroy() {
@@ -81,5 +83,8 @@ export class GuestsComponent implements OnInit, OnDestroy {
     this.subscription = this.foodService
       .getTestFoods()
       .subscribe((data) => console.log(data));
+  }
+  onClickRow(idx: number) {
+    this.activateIndex = idx;
   }
 }

@@ -17,12 +17,18 @@ import { GuestService } from '../guest.service';
 })
 export class FoodSearchComponent implements OnInit {
   guests$!: Observable<Guest[]>;
+  isLoading: boolean = false;
   private searchTerms = new Subject<string>();
 
   constructor(private guestService: GuestService) {}
 
   search(term: string): void {
+    this.isLoading = true;
     this.searchTerms.next(term);
+    {
+      this.isLoading = false;
+      return;
+    }
   }
 
   ngOnInit(): void {

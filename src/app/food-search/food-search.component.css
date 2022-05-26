@@ -46,3 +46,8 @@ ul.search-result {
 #search-component {
   text-align: center;
 }
+.search-result app-loading {
+  position: relative;
+  top: -30px !important;
+  left: -30px;
+}

@@ -12,6 +12,7 @@ import { GuestService } from '../guest.service';
 export class DashboardComponent implements OnInit {
   foods: Food[] = [];
   @Output() isSelect = new EventEmitter<number>();
+  isLoading: boolean = false;
 
   constructor(
     private guestService: GuestService,
@@ -22,7 +23,11 @@ export class DashboardComponent implements OnInit {
     this.getFoods();
   }
   getFoods(): void {
-    this.foodService.getFoods().subscribe((foods) => (this.foods = foods));
+    this.isLoading = true;
+    this.foodService.getFoods().subscribe((foods) => {
+      this.foods = foods;
+      this.isLoading = false;
+    });
   }
   onClickFood(id: number): void {
     if (!id) return;

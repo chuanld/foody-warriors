@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { Food } from '../food';
 import { FoodService } from '../food.service';
@@ -14,6 +14,8 @@ export class FoodsComponent implements OnInit {
   guests: Guest[] = [];
   foods: Food[] = [];
   food: Food;
+  isLoading: boolean = false;
+  @Input() activeIndex = 0;
 
   constructor(
     private guestService: GuestService,
@@ -26,6 +28,7 @@ export class FoodsComponent implements OnInit {
 
   //GetData
   getData(): void {
+    this.isLoading = true;
     let foods = this.foodService.getFoods();
     let guests = this.guestService.getGuestsData();
 
@@ -34,6 +37,7 @@ export class FoodsComponent implements OnInit {
       localStorage.setItem('foods', JSON.stringify(foods));
       this.guests = guests;
       localStorage.setItem('guests', JSON.stringify(guests));
+      this.isLoading = false;
     });
   }
 
@@ -49,12 +53,16 @@ export class FoodsComponent implements OnInit {
       window.alert(msg);
       return;
     }
+    this.isLoading = true;
     this.foods = this.foods.filter((h) => h !== food);
     this.foodService.deleteFood(food.id).subscribe();
     localStorage.setItem(
       'foods',
       JSON.stringify(
-        this.foodService.getFoods().subscribe((foods) => (this.foods = foods))
+        this.foodService.getFoods().subscribe((foods) => {
+          this.foods = foods;
+          this.isLoading = false;
+        })
       )
     );
   }
@@ -68,7 +76,8 @@ export class FoodsComponent implements OnInit {
     });
     this.getData();
   }
-  onSelectFood(foodSelect: Food) {
+  onSelectFood(foodSelect: Food, idx: number) {
     this.food = foodSelect;
+    this.activeIndex = idx;
   }
 }

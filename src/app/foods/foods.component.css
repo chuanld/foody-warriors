@@ -49,6 +49,7 @@ input {
 }
 
 .foods li:hover {
+  transition: ease 0.3s;
   left: 0.1em;
 }
 
@@ -68,14 +69,17 @@ input {
   margin-bottom: 5px;
 }
 
-.foods a:hover {
+/* .foods a:hover {
   color: #2c3a41;
   background-color: #e6e6e6;
-}
+} */
 
-.foods a:active {
-  background-color: #525252;
+.foods .foods-list a.active {
+  background-color: #b6b3b3;
   color: #fafafa;
+  /* transition: ease 0.3s; */
+  left: 0.2em;
+  /* display: block; */
 }
 
 .foods .badge {
@@ -139,4 +143,13 @@ button.delete:hover {
   .foods .foods-list {
     width: 100px;
   }
+}
+.foods .foods-container app-loading {
+  position: relative !important;
+  top: -35px !important;
+  /* color: #aa8c09; */
+}
+
+.foods .foods-container .lds-ellipsis div {
+  background-color: #aa8c09 !important;
 }

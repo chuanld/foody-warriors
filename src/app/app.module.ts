@@ -15,6 +15,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { GuestFormComponent } from './guest-form/guest-form.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { FoodFormComponent } from './food-form/food-form.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FoodFormComponent } from './food-form/food-form.component';
     GuestFormComponent,
     TicketDetailComponent,
     FoodFormComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
