@@ -27,11 +27,11 @@
 }
 .foods .foods-list {
   /* width: fit-content; */
-  min-width: 188px;
+  min-width: 200px;
 }
 .foods .foods-list ul {
   list-style-type: none;
-  width: 100%;
+  /* width: 100%; */
   margin-left: -20px;
 }
 input {
@@ -59,7 +59,7 @@ input {
   background-color: #eee;
   margin: 0.5em;
   padding: 0.3em 0;
-  height: 2em;
+  height: 2.5em;
   border-radius: 4px;
   display: block;
   width: 100%;
@@ -92,8 +92,8 @@ input {
   position: relative;
   left: -1px;
   top: -4px;
-  height: 2.1em;
-  min-width: 16px;
+  height: 2.4rem;
+  min-width: 40px;
   text-align: right;
   margin-right: 0.8em;
   border-radius: 4px 0 0 4px;
@@ -124,6 +124,8 @@ button.delete {
   border-radius: 50%;
   background-color: #eee;
   font-size: 13px;
+  font-weight: 900;
+  outline: none;
 }
 
 button.delete:hover {

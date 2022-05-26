@@ -23,7 +23,7 @@
 }
 .show-message .description-message {
   position: fixed;
-  top: 850px;
+  top: 864px;
   right: 35px;
   z-index: 1;
 }

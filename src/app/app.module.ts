@@ -16,7 +16,14 @@ import { GuestFormComponent } from './guest-form/guest-form.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { FoodFormComponent } from './food-form/food-form.component';
 import { LoadingComponent } from './loading/loading.component';
-
+import { ModalComponent } from './modal/modal.component';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { DialogService } from './services/dialog.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +36,7 @@ import { LoadingComponent } from './loading/loading.component';
     TicketDetailComponent,
     FoodFormComponent,
     LoadingComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,8 +47,13 @@ import { LoadingComponent } from './loading/loading.component';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

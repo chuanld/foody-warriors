@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ data?.title }}</h1>
+<div mat-dialog-content>
+  <ng-content select=""></ng-content>
+  {{ data?.message }}
+</div>
+<div mat-dialog-actions>
+  <button [mat-dialog-close]="data.item" cdkFocusInitial>Yes</button>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+</div>

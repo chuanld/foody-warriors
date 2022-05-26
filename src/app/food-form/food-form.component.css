@@ -24,7 +24,7 @@ form {
 }
 .form-group input,
 .form-group select {
-  height: 25px;
+  height: 35px;
 }
 .form-group select {
   height: 30px;
@@ -39,4 +39,6 @@ button:hover {
 }
 button.isDisabled {
   background-color: #ddd !important;
+  border: #008080 1px solid !important;
+  outline: none !important;
 }

@@ -4,6 +4,12 @@ import { Food } from '../food';
 import { FoodService } from '../food.service';
 import { Guest } from '../guest';
 import { GuestService } from '../guest.service';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-foods',
@@ -17,9 +23,14 @@ export class FoodsComponent implements OnInit {
   isLoading: boolean = false;
   @Input() activeIndex = 0;
 
+  //dialog
+  title: string;
+  message: string;
+
   constructor(
     private guestService: GuestService,
-    private foodService: FoodService
+    private foodService: FoodService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -79,5 +90,17 @@ export class FoodsComponent implements OnInit {
   onSelectFood(foodSelect: Food, idx: number) {
     this.food = foodSelect;
     this.activeIndex = idx;
+  }
+  openDialog(food: Food) {
+    this.title = 'Delete Confirm';
+    this.message = `Are you sure  delete ${food.name} id: ${food.id}`;
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '350px',
+      data: { title: 'Delete Confirm', message: this.message, item: food },
+    });
+    dialogRef.afterClosed().subscribe((food) => {
+      if (!food) return;
+      this.delete(food);
+    });
   }
 }

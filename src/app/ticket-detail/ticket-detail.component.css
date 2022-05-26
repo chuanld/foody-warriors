@@ -24,6 +24,8 @@ button:disabled {
   background-color: #eee;
   color: #ccc;
   cursor: auto;
+  border: #008080 1px solid !important;
+  outline: none !important;
 }
 .guest-detail {
   width: 800px;

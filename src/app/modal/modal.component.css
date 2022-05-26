@@ -1,0 +1,15 @@
+button {
+  background-color: teal;
+  color: #fff;
+  width: 100px;
+  font-size: 14px;
+  padding: 8px 10px !important;
+}
+button:hover {
+  background-color: rgb(13, 121, 121);
+}
+button.isDisabled {
+  background-color: #ddd !important;
+  border: #008080 1px solid !important;
+  outline: none !important;
+}
