@@ -19,11 +19,13 @@ import { MessageSysService } from '../message-sys.service';
 })
 export class FoodFormComponent implements OnInit, OnChanges {
   @Input() foodIsSelect: Food | any;
-  @Output() isClickSubmit = new EventEmitter<Food>();
+  @Output() isClickSubmit = new EventEmitter<any>();
   @Output() isClickEditSubmit = new EventEmitter<Food>();
   @Input() foods: Array<Food>;
   onEdit: boolean;
   formValues: FormGroup;
+  formListFoods: FormGroup;
+  arrFood: string[] = [];
   // formEditValue: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -41,10 +43,23 @@ export class FoodFormComponent implements OnInit, OnChanges {
       this.onEdit = false;
       return;
     }
-    if (!this.formValues.valid) return this.log('Form invalid');
-    const infFood = this.formValues.value;
-    console.log('adding');
-    this.isClickSubmit.emit(infFood);
+    // if (!this.formValues.valid) return this.log('Form invalid');
+    // const infFood = this.formValues.value;
+    // this.isClickSubmit.emit(infFood);
+    // this.formValues.reset();
+    if (!this.formListFoods.valid) return this.log('Form invalid');
+    const values = this.formListFoods.value.listFood;
+    this.arrFood = values.split(',');
+    this.isClickSubmit.emit(this.arrFood);
+    this.formListFoods.reset();
+  }
+
+  onSubmit1() {
+    const values = this.formValues.value;
+    // const strValues = values.toString();
+    // this.arrFood = values.split(',');
+    console.log(values);
+    this.isClickSubmit.emit(values);
     this.formValues.reset();
   }
 
@@ -62,7 +77,9 @@ export class FoodFormComponent implements OnInit, OnChanges {
       // order: '',
       // subOrder: '',
     });
-    console.log(this.formEditValue.value, 'formvalueEdit in init');
+    this.formListFoods = this.formBuilder.group({
+      listFood: [],
+    });
   }
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (this.foodIsSelect) {

@@ -30,9 +30,11 @@ export class FoodService {
       catchError(this.handleError<Food[]>('get-foods', []))
     );
   }
-  addFood(food: Food): Observable<Food> {
-    return this.http.post<Food>(this.foodsUrl, food, this.httpOptions).pipe(
-      tap((newFood: Food) => this.log(`Add food:${newFood.name}`)),
+  addFood(food: any): Observable<any> {
+    return this.http.post<any>(this.foodsUrl, food, this.httpOptions).pipe(
+      tap((newFood: Food) =>
+        this.log(`Add food:${newFood.name ? newFood.name : newFood}`)
+      ),
       catchError(this.handleError<Food>('add-food'))
     );
   }

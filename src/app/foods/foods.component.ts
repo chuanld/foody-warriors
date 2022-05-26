@@ -79,13 +79,28 @@ export class FoodsComponent implements OnInit {
   }
 
   clickEditSubmit(food: Food) {
+    console.log(food);
     this.foodService.updateFood(food).subscribe(() => this.getData());
   }
-  clickSubmit(newFood: Food) {
-    this.foodService.addFood(newFood).subscribe((food) => {
-      this.foods.push(food);
+  clickSubmit(newFoods) {
+    if (!newFoods) return;
+    // console.log(newFoods);
+    newFoods.forEach((newFood) => {
+      if (newFood.trim() || newFood.trim() != '') {
+        const data = {
+          name: newFood,
+        };
+        this.foodService.addFood(data).subscribe((food) => {
+          this.foods.push(food);
+        });
+      }
     });
     this.getData();
+    // console.log(newFoods);
+    // this.foodService.addFood(newFood).subscribe((food) => {
+    //   this.foods.push(food);
+    // });
+    // this.getData();
   }
   onSelectFood(foodSelect: Food, idx: number) {
     this.food = foodSelect;
