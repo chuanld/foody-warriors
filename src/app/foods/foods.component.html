@@ -1,6 +1,6 @@
 <div class="foods">
   <div class="foods-heading">
-    <span>Manage Foods {{ isLoading }}</span>
+    <span>Manage Foods</span>
   </div>
   <div class="foods-container">
     <div>
@@ -32,7 +32,7 @@
             </button>
           </li>
         </ng-template>
-        <ng-template [ngIf]="isLoading === true">
+        <ng-template [ngIf]="isLoading">
           <app-loading></app-loading>
         </ng-template>
       </ul>
