@@ -11,10 +11,12 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 1,
         name: 'Chuan',
+        order: [2],
       },
       {
         id: 2,
         name: 'Danh',
+        order: [3, 4],
       },
     ];
     const getLocalStoredGuests = JSON.parse(
