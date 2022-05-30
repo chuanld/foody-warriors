@@ -16,8 +16,9 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="order">Order:</label>
+    <!-- <div class="form-group">
+      <label for="order">Order(s):</label>
+
       <select
         class="form-control"
         id="order"
@@ -25,16 +26,58 @@
         *ngIf="foods.length > 0"
         style="font-style: italic"
         required
+        multiple
       >
         <option value="">
           <p><i>--select food--</i></p>
         </option>
-        <option *ngFor="let food of foods" [value]="food.id">
-          {{ food.name }}
-        </option>
+
+        <ng-template ngFor let-food [ngForOf]="foods">
+          <option [value]="food.id">
+            {{ food.name }}
+          </option>
+        </ng-template>
       </select>
-    </div>
+    </div> -->
     <div class="form-group">
+      <label for="order">Order(s):</label>
+
+      <mat-form-field>
+        <mat-select
+          placeholder="Select food(s)"
+          multiple
+          [(value)]="listFoodsResult"
+          formControlName="order"
+        >
+          <mat-option *ngFor="let food of foods" [value]="food.id">{{
+            food.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="order">Result:</label>
+      <div class="container-order">
+        <mat-chip-list
+          aria-label="Dog selection"
+          *ngFor="let foodIsSelect of listFoodsResult"
+        >
+          <ng-template ngFor let-food [ngForOf]="foods">
+            <mat-chip *ngIf="food.id === foodIsSelect">
+              <!-- <mat-chip-avatar>
+              <img
+                src="https://material.angular.io/assets/img/examples/shiba1.jpg"
+                alt="Photo of a Shiba Inu"
+              />
+            </mat-chip-avatar> -->
+              {{ food.name }}
+            </mat-chip>
+          </ng-template>
+        </mat-chip-list>
+      </div>
+    </div>
+    <!-- <div class="form-group">
       <label for="attack">Sub Order:</label>
       <select
         class="form-control"
@@ -49,7 +92,7 @@
           {{ food.name }}
         </option>
       </select>
-    </div>
+    </div> -->
     <div class="submit">
       <button
         [disabled]="!formValues.valid"

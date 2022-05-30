@@ -86,6 +86,21 @@ export class FoodsComponent implements OnInit {
     if (!newFoods) return;
     // console.log(newFoods);
     newFoods.forEach((newFood) => {
+      const regExp = new RegExp("^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_ ]+$")
+      if(!regExp.test(newFood)) {
+
+        const dialogRef = this.dialog.open(ModalComponent, {
+          width: '350px',
+          data: {
+            title: 'Input Food(s)',
+            message: `Food cannot contain special character - Your input ${newFood}`,
+ 
+            buttonOK: 'Got it',
+           
+          },
+        
+        });return
+      }
       if (newFood.trim() || newFood.trim() != '') {
         const data = {
           name: newFood,
@@ -111,7 +126,13 @@ export class FoodsComponent implements OnInit {
     this.message = `Are you sure  delete ${food.name} id: ${food.id}`;
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '350px',
-      data: { title: 'Delete Confirm', message: this.message, item: food },
+      data: {
+        title: 'Delete Confirm',
+        message: this.message,
+        item: food,
+        buttonYes: 'Yes',
+        buttonCancel: 'Cancel',
+      },
     });
     dialogRef.afterClosed().subscribe((food) => {
       if (!food) return;

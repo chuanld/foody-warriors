@@ -17,14 +17,16 @@
 
       &nbsp;&nbsp;
     </div>
-    <button
-      type="submit"
-      class="btn btn-success"
-      [disabled]="!formListFoods.valid"
-      [class.isDisabled]="!formListFoods.valid"
-    >
-      Submit
-    </button>
+    <div class="submit">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!formListFoods.valid"
+        [class.isDisabled]="!formListFoods.valid"
+      >
+        Submit
+      </button>
+    </div>
   </form>
 </div>
 
@@ -64,7 +66,14 @@
         [disabled]="!formEditValue.valid"
         [class.isDisabled]="!formEditValue.valid"
       >
-        Submit
+        Edit
+      </button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        (click)="foodIsSelect=''"
+      >
+        Add food
       </button>
 
       &nbsp;&nbsp;

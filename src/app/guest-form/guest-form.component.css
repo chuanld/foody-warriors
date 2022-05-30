@@ -45,8 +45,26 @@ button.isDisable {
   background-color: #ddd;
   border: #008080 1px solid !important;
   outline: none !important;
+  color: #000000;
+  cursor: auto;
 }
 form .submit {
-  text-align: center;
+  text-align: right;
   width: 100%;
+}
+form .submit button {
+  margin-right: 0px;
+}
+
+.form-guest-edit .mat-form-field {
+  width: 100% !important;
+}
+.form-group .container-order {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.form-group .container-order .mat-chip-list {
+  margin: 4px;
 }

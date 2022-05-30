@@ -34,6 +34,12 @@ button {
   background-color: teal;
   color: #fff;
 }
+.form-food-edit .submit {
+  text-align: right;
+}
+.form-food-edit .submit button {
+  margin-right: 10px;
+}
 button:hover {
   background-color: rgb(13, 121, 121);
 }
@@ -41,4 +47,5 @@ button.isDisabled {
   background-color: #ddd !important;
   border: #008080 1px solid !important;
   outline: none !important;
+  color: #000000;
 }

@@ -1,17 +1,19 @@
 <div id="search-component">
   <input
-    placeholder="Search ticket here..."
+    placeholder="Search food here..."
     #searchBox
     id="search-box"
-    (input)="search(searchBox.value)"
+    [(ngModel)]="initValue"
+    (input)="onInput($event)"
   />
+  <button *ngIf="onSearch" class="btn-search" (click)="handleSearch()">Search</button>
 
-  <ul class="search-result">
+  <!-- <ul class="search-result">
     <ng-template [ngIf]="isLoading"> <app-loading></app-loading></ng-template>
-    <li *ngFor="let guest of guests$ | async">
+    <li *ngFor="let guest of foods | async">
       <a routerLink="/detail/{{ guest.id }}">
         {{ guest.name }}
       </a>
     </li>
-  </ul>
+  </ul> -->
 </div>

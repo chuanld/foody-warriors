@@ -4,6 +4,18 @@
   {{ data?.message }}
 </div>
 <div mat-dialog-actions>
-  <button [mat-dialog-close]="data.item" cdkFocusInitial>Yes</button>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button *ngIf="data.buttonYes" [mat-dialog-close]="data.item" cdkFocusInitial>
+    {{ data.buttonYes }}
+  </button>
+  <button *ngIf="data.buttonNo" mat-button (click)="onNoClick()">
+    {{ data.buttonNo }}
+  </button>
+
+  <button *ngIf="data.buttonOK" mat-button (click)="onNoClick()">
+    {{ data.buttonOK }}
+  </button>
+
+  <button *ngIf="data.buttonCancel" mat-button (click)="onNoClick()">
+    {{ data.buttonCancel }}
+  </button>
 </div>

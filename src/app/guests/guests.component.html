@@ -3,26 +3,6 @@
     <span>Manage Ticket</span>
   </div>
   <div class="guests-container">
-    <!-- <div class="guests-list">
-      <div class="guests-list-title">
-        <span>List Ticket</span>
-      </div>
-      <ul>
-        <li *ngFor="let guest of guests">
-          <a routerLink="/detail/{{ guest.id }}">
-            <span class="badge">{{ guest.id }}</span> {{ guest.name }}
-          </a>
-          <button
-            type="button"
-            class="delete"
-            title="delete guest"
-            (click)="delete(guest)"
-          >
-            x
-          </button>
-        </li>
-      </ul>
-    </div> -->
     <div>
       <app-guest-form
         (isClickSubmit)="clickSubmit($event)"
@@ -31,16 +11,14 @@
     </div>
   </div>
   <div class="container">
-    <!-- <div class="row">
-      <div class="col"> -->
     <table class="table">
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Order</th>
-          <th>Sub Order</th>
-          <th>Action</th>
+          <!-- <th>Sub Order</th> -->
+          <th class="last-col">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -48,17 +26,23 @@
           <tr [class.active]="idx === activateIndex" (click)="onClickRow(idx)">
             <td>{{ guest.id }}</td>
             <td>{{ guest.name }}</td>
-            <ng-template [ngIf]="guest.order * 1 >= 1" [ngIfElse]="elseOrder"
-              ><ng-template ngFor let-food [ngForOf]="foods">
-                <td *ngIf="food.id == guest.order">{{ food.name }}</td>
-              </ng-template></ng-template
-            >
-            <ng-template #elseOrder
-              ><td>
+            <ng-template [ngIf]="guest.order.length > 0" [ngIfElse]="elseOrder">
+              <td>
+                <ng-template ngFor let-order [ngForOf]="guest.order">
+                  <ng-template ngFor let-food [ngForOf]="foods">
+                    <ng-template [ngIf]="order == food.id">
+                      {{ food.name }},
+                    </ng-template>
+                  </ng-template>
+                </ng-template>
+              </td>
+            </ng-template>
+            <ng-template #elseOrder>
+              <td>
                 <i>None</i>
-              </td></ng-template
-            >
-            <ng-template
+              </td>
+            </ng-template>
+            <!-- <ng-template
               [ngIf]="guest.subOrder * 1 >= 1"
               [ngIfElse]="elseSubOrder"
             >
@@ -72,14 +56,17 @@
               ><td>
                 <i>None</i>
               </td></ng-template
-            >
+            > -->
             <td>
               <div class="row">
-                <button class="btn-edit">
-                  <a routerLink="/detail/{{ guest.id }}">Edit</a>
-                </button>
+                <a routerLink="/detail/{{ guest.id }}">
+                  <button class="btn-edit">
+                    <mat-icon>mode</mat-icon>
+                  </button>
+                </a>
+
                 <button class="btn-remove" (click)="delete(guest)">
-                  Remove
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </td>
@@ -94,3 +81,8 @@
     </div> -->
   </div>
 </div>
+<mat-icon>facebook</mat-icon>
+<mat-icon>delete</mat-icon>
+<mat-icon>search</mat-icon>
+<mat-icon>done</mat-icon>
+<mat-icon>settings</mat-icon>

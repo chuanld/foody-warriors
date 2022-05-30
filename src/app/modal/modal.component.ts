@@ -24,5 +24,9 @@ export class ModalComponent {
 export interface DialogData {
   title: string;
   message: string;
-  item: Food;
+  item?: Food;
+  buttonOK?: string;
+  buttonYes?: string;
+  buttonNo?: string;
+  buttonCancel?: string;
 }

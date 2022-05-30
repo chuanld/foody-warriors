@@ -4,6 +4,9 @@ import { Food } from '../food';
 import { FoodService } from '../food.service';
 import { Guest } from '../guest';
 import { GuestService } from '../guest.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-guests',
@@ -19,7 +22,8 @@ export class GuestsComponent implements OnInit, OnDestroy {
 
   constructor(
     private guestService: GuestService,
-    private foodService: FoodService
+    private foodService: FoodService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -45,34 +49,39 @@ export class GuestsComponent implements OnInit, OnDestroy {
   }
 
   //CRUD
-  add(name: string): void {
-    // name = name.trim();
-    // if (!name) {
-    //   return;
-    // }
-    // this.guestService.({ name } as Hero).subscribe((hero) => {
-    //   this.heroes.push(hero);
-    // });
-  }
   delete(guest: Guest): void {
     // this.guests = this.guests.filter((h) => h !== guest);
-    this.isLoading = true;
-    this.subscription = this.guestService.deleteGuest(guest.id).subscribe();
-    localStorage.setItem(
-      'guests',
-      JSON.stringify(
-        this.guestService.getGuestsData().subscribe((guests) => {
-          this.guests = guests;
-          this.isLoading = false;
-        })
-      )
-    );
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '350px',
+      data: {
+        title: 'Delete Confirm',
+        message: `Are you sure  delete ${guest.name} id: ${guest.id}`,
+        item: guest,
+        buttonYes: 'Yes',
+        buttonCancel: 'Cancel',
+      },
+    });
+    dialogRef.afterClosed().subscribe((guest) => {
+      if (!guest) return;
+      this.isLoading = true;
+      this.subscription = this.guestService.deleteGuest(guest.id).subscribe();
+      localStorage.setItem(
+        'guests',
+        JSON.stringify(
+          this.guestService.getGuestsData().subscribe((guests) => {
+            this.guests = guests;
+            this.isLoading = false;
+          })
+        )
+      );
+    });
   }
 
   //submit
   clickSubmit(newGuest: Guest) {
     this.subscription = this.guestService.addGuest(newGuest).subscribe();
     this.getData();
+    // console.log(newGuest);
   }
   ngOnDestroy() {
     if (this.subscription) {

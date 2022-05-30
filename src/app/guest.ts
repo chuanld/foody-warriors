@@ -1,6 +1,6 @@
 export interface Guest {
   id: number;
   name: string;
-  order: number;
+  order: any;
   subOrder: number;
 }

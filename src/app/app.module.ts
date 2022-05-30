@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,11 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 // import { DialogService } from './services/dialog.service';
 @NgModule({
   declarations: [
@@ -49,11 +54,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     }),
     MatDialogModule,
     BrowserAnimationsModule,
+    MatIconModule,
+    MatSliderModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

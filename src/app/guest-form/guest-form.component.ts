@@ -14,7 +14,7 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageSysService } from '../message-sys.service';
 
 import { ActivatedRoute } from '@angular/router';
-
+import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-guest-form',
   templateUrl: './guest-form.component.html',
@@ -23,13 +23,15 @@ import { ActivatedRoute } from '@angular/router';
 export class GuestFormComponent implements OnInit, OnChanges {
   guest: Guest;
   @Output() isClickSubmit = new EventEmitter<Guest>();
-  @Input() foods: Array<Food>;
+  @Input() foods: Food[];
   id: number | 0;
+
+  listFoodsResult: number[];
 
   formValues: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
-    order: ['', Validators.required],
-    subOrder: '',
+    order: [[], Validators.required],
+    // subOrder: '',
   });
 
   constructor(
@@ -50,27 +52,44 @@ export class GuestFormComponent implements OnInit, OnChanges {
     this.isClickSubmit.emit(infHero);
     this.formValues.reset({
       name: '',
-      order: '',
-      subOrder: '',
+      order: [],
+      // subOrder: '',
     });
   }
-  showFormControls(form: any) {
-    return form && form.controls.name && form.controls.name.value;
-  }
+  // showFormControls(form: any) {
+  //   return form && form.controls.name && form.controls.name.value;
+  // }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id != 0) {
       console.log('params:', this.id);
       this.formValues = this.formBuilder.group({
-        name: ['', Validators.required],
-        order: this.id,
-        subOrder: '',
+        name: [
+          [],
+          [
+            Validators.pattern(
+              '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ ]+$'
+            ),
+            Validators.required,
+          ],
+        ],
+        order: [[this.id]],
+        // subOrder: '',
       });
+
       return;
     }
     this.formValues = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: [
+        [],
+        [
+          Validators.pattern(
+            '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ ]+$'
+          ),
+          Validators.required,
+        ],
+      ],
       order: ['', Validators.required],
       subOrder: '',
     });

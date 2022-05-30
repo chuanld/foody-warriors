@@ -9,7 +9,13 @@ import {
 } from '@angular/core';
 import { Guest } from '../guest';
 import { Food } from '../food';
-import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  Form,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MessageSysService } from '../message-sys.service';
 
 @Component({
@@ -54,14 +60,14 @@ export class FoodFormComponent implements OnInit, OnChanges {
     this.formListFoods.reset();
   }
 
-  onSubmit1() {
-    const values = this.formValues.value;
-    // const strValues = values.toString();
-    // this.arrFood = values.split(',');
-    console.log(values);
-    this.isClickSubmit.emit(values);
-    this.formValues.reset();
-  }
+  // onSubmit1() {
+  //   const values = this.formValues.value;
+  //   // const strValues = values.toString();
+  //   // this.arrFood = values.split(',');
+  //   console.log(values);
+  //   this.isClickSubmit.emit(values);
+  //   this.formValues.reset();
+  // }
 
   showFormControls(form: any) {
     return form && form.controls.name && form.controls.name.value;
@@ -69,16 +75,16 @@ export class FoodFormComponent implements OnInit, OnChanges {
 
   formEditValue = this.formBuilder.group({
     id: '',
-    name: '',
+    name: ['', [Validators.pattern('^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_ 0-9]+$'), Validators.required]],
   });
   ngOnInit(): void {
     this.formValues = this.formBuilder.group({
-      name: '',
+      name: ['', [ Validators.required]],
       // order: '',
       // subOrder: '',
     });
     this.formListFoods = this.formBuilder.group({
-      listFood: [],
+      listFood: [[], [Validators.required]],
     });
   }
   ngOnChanges(simpleChanges: SimpleChanges) {

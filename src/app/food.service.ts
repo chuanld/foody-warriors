@@ -53,6 +53,23 @@ export class FoodService {
     );
   }
 
+  //search
+  //search$
+  searchFoods(term: string): Observable<Food[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Food[]>(`${this.foodsUrl}/?name=${term}`).pipe(
+      tap((x) =>
+        x.length
+          ? this.log(`Found food matching "${term}"`)
+          : this.log(`No food matching "${term}"`)
+      ),
+      catchError(this.handleError<Food[]>('search-food', []))
+    );
+  }
+
   private log(message: string) {
     this.messageSysService.addMess(`FoodService: ${message}`);
   }

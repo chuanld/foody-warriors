@@ -1,17 +1,27 @@
-<app-food-search></app-food-search>
+<app-food-search
+  (textChange)="onTextChange($event)"
+  [initValue]="textSearchInput"
+  (onSearch)="onSearchForm($event)"
+>
+</app-food-search>
 <div class="dash-board">
   <div class="top-food">
     <h2>Top Food</h2>
     <div class="guests-menu">
-      <!-- <a *ngFor="let food of foods" routerLink="/detail/{{ hero.id }}">
-            {{ hero.name }}
-          </a> -->
       <a
         *ngFor="let food of foods"
         routerLink="/guests/{{ food.id }}"
         (click)="onClickFood(food.id)"
       >
         {{ food.name }}
+      </a>
+    </div>
+    <div class="guests-menu">
+      <a
+        *ngFor="let result of results$ | async"
+        routerLink="/guests/{{ result.id }}"
+      >
+        {{ result.name }}
       </a>
     </div>
     <ng-template [ngIf]="isLoading"> <app-loading></app-loading></ng-template>

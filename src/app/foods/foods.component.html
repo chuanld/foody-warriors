@@ -3,14 +3,23 @@
     <span>Manage Foods</span>
   </div>
   <div class="foods-container">
+    <div>
+      <app-food-form
+        (isClickSubmit)="clickSubmit($event)"
+        (isClickEditSubmit)="clickEditSubmit($event)"
+        [foods]="foods"
+        [foodIsSelect]="food"
+      ></app-food-form>
+    </div>
     <div class="foods-list">
       <div class="foods-list-title">
         <span>List Foods</span>
       </div>
       <ul>
-        <li *ngFor="let food of foods; let idx = index">
+        <ng-template ngFor let-food [ngForOf]="foods" let-idx="index">
+        <li (click)="onSelectFood(food, idx)">
           <a [class.active]="idx === activeIndex">
-            <span class="badge" (click)="onSelectFood(food, idx)">{{
+            <span class="badge" >{{
               food.id
             }}</span>
             {{ food.name }}
@@ -24,18 +33,11 @@
             x
           </button>
         </li>
+      </ng-template>
         <ng-template [ngIf]="isLoading">
           <app-loading></app-loading>
         </ng-template>
       </ul>
-    </div>
-    <div>
-      <app-food-form
-        (isClickSubmit)="clickSubmit($event)"
-        (isClickEditSubmit)="clickEditSubmit($event)"
-        [foods]="foods"
-        [foodIsSelect]="food"
-      ></app-food-form>
     </div>
   </div>
 </div>

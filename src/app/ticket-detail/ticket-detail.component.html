@@ -5,59 +5,57 @@
 
   <div class="guest-detail-info">
     <div class="guest-edit">
-      <div class="guest-detail-edit-show">
-        <label>id: </label>
+      <form [formGroup]="formValues" (ngSubmit)="onSubmit()">
+        <div class="guest-detail-edit-show">
+          <label>id: </label>
 
-        <input id="guest-id" [value]="guest.id" placeholder="id" disabled />
-      </div>
-      <div class="guest-detail-edit-show">
-        <label for="guest-name">Guest Name: </label>
-        <input id="guest-name" [(ngModel)]="guest.name" placeholder="name" />
-      </div>
-      <div class="guest-detail-edit-show">
-        <label for="guest-ability">Guest Order: </label>
-        <select
-          id="guest-order"
-          [(ngModel)]="guest.order"
-          (change)="selectOption($event)"
-          required
-        >
-          <option value="{{ 0 }}"><i>None</i></option>
-          <option *ngFor="let food of foods" [value]="food.id">
-            {{ food.name }}
-          </option>
-        </select>
-      </div>
-      <div class="guest-detail-edit-show">
-        <label for="guest-order">Guest SubOrder: </label>
-        <select
-          id="guest-subOrder"
-          [(ngModel)]="guest.subOrder"
-          (change)="selectOption($event)"
-          required
-        >
-          <option value="{{ 0 }}"><i>None</i></option>
-          <option *ngFor="let food of foods" [value]="food.id">
-            {{ food.name }}
-          </option>
-        </select>
-      </div>
-      <!-- <div class="guest-detail-edit-show">
-        <label for="guest-attack">guest Attack: </label>
-        <input
-          id="guest-attack"
-          [(ngModel)]="guest.attack"
-          placeholder="Attack"
-        />
-      </div> -->
-      <!-- <div class="guest-detail-info-show">
-        <label for="guest-defence">guest Defence: </label>
-        <input
-          id="guest-defence"
-          [(ngModel)]="guest.defence"
-          placeholder="Defence"
-        />
-      </div> -->
+          <input id="guest-id" [value]="guest.id" placeholder="id" disabled />
+        </div>
+        <div class="guest-detail-edit-show">
+          <label for="guest-name">Guest Name: </label>
+          <input id="guest-name" formControlName="name" placeholder="name" />
+        </div>
+        <!-- <div class="guest-detail-edit-show">
+          <label for="guest-ability">Guest Order: </label>
+          <select
+            id="guest-order"
+            [(ngModel)]="guest.order"
+            formControlName="order"
+            (change)="selectOption($event)"
+            required
+          >
+            <option value="{{ 0 }}"><i>None</i></option>
+            <option *ngFor="let food of foods" [value]="food.id">
+              {{ food.name }}
+            </option>
+          </select>
+        </div> -->
+        <div class="guest-detail-edit-show">
+          <label for="guest-order">Guest SubOrder: </label>
+          <mat-form-field>
+            <mat-select
+              placeholder="Select food(s)"
+              multiple
+              [(value)]="listOrderUpdate"
+              formControlName="order"
+            >
+              <mat-option *ngFor="let food of foods" [value]="food.id">{{
+                food.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="guest-info-submit-btn">
+          <button
+            type="button"
+            (click)="save()"
+            [disabled]="guest.name == '' || guest.order == 0"
+          >
+            save
+          </button>
+          <button type="button" (click)="goBack()">back</button>
+        </div>
+      </form>
     </div>
     <div class="guest-info">
       <div class="guest-detail-info-show">
@@ -68,14 +66,15 @@
         <label for="guest-name">Guest Name: </label>
         <p>{{ guest.name }}</p>
       </div>
-      <div class="guest-detail-info-show">
+      <div class="guest-detail-info-show info-orderlist">
         <label for="guest-order">Order: </label>
-        <div *ngIf="guest.order != 0 && guest.order; else elseBlock1">
-          <div *ngFor="let food of foods">
-            <p *ngIf="food.id == guest.order">
-              {{ food.name }}
-            </p>
-          </div>
+
+        <div *ngIf="guest.order.length > 0; else elseBlock1">
+          <ng-template ngFor let-order [ngForOf]="guest.order">
+            <div *ngFor="let food of foods">
+              <p *ngIf="food.id == order.id">{{ food.name }},</p>
+            </div>
+          </ng-template>
         </div>
         <ng-template #elseBlock1
           ><div>
@@ -83,7 +82,7 @@
           </div></ng-template
         >
       </div>
-      <div class="guest-detail-info-show">
+      <!-- <div class="guest-detail-info-show">
         <label for="guest-order">SubOrder: </label>
         <div *ngIf="guest.subOrder != 0 && guest.subOrder; else elseBlock1">
           <div *ngFor="let food of foods">
@@ -97,17 +96,7 @@
             <p><i>Updating...</i></p>
           </div></ng-template
         >
-      </div>
+      </div> -->
     </div>
-  </div>
-  <div class="guest-info-submit-btn">
-    <button
-      type="button"
-      (click)="save()"
-      [disabled]="guest.name == '' || guest.order == 0"
-    >
-      save
-    </button>
-    <button type="button" (click)="goBack()">back</button>
   </div>
 </div>

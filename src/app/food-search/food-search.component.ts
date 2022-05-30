@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
@@ -16,26 +16,46 @@ import { GuestService } from '../guest.service';
   styleUrls: ['./food-search.component.css'],
 })
 export class FoodSearchComponent implements OnInit {
-  guests$!: Observable<Guest[]>;
+  foods!: Observable<any>;
   isLoading: boolean = false;
-  private searchTerms = new Subject<string>();
+  searchTerms = new Subject<string>();
+  subscription: Subscription[] = [];
+  initValue: string = '';
+  @Output() textChange = new EventEmitter<string>();
+  textSearch: string;
+  @Output() onSearch= new EventEmitter<boolean>();
 
-  constructor(private guestService: GuestService) {}
+  constructor(private foodService: FoodService) {}
 
-  search(term: string): void {
-    this.isLoading = true;
-    this.searchTerms.next(term);
-    {
-      this.isLoading = false;
-      return;
-    }
-  }
+  trigger = this.searchTerms.pipe();
 
   ngOnInit(): void {
-    this.guests$ = this.searchTerms.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.guestService.searchGuests(term))
-    );
+    // this.foods$ = this.searchTerms.pipe(
+    //   debounceTime(500),
+    //   distinctUntilChanged(),
+    //   switchMap((term: string) => this.textChange.emit(term))
+    // );
+    const subscription = this.trigger.subscribe((currentValue) => {
+      this.textChange.emit(currentValue);
+    });
+    this.subscription.push(subscription);
+    console.log('sasd');
+  }
+  ngOnDestroy() {
+    this.subscription.forEach((sub) => sub.unsubscribe());
+  }
+
+  onInput(e: any) {
+    if(e.target.value.trim()==''){
+      // this.onSearch=false;
+      this.onSearch.emit(false)
+     
+     
+    }else this.onSearch.emit(true)
+    this.textSearch = e.target.value;
+  }
+  handleSearch(): void {
+    this.searchTerms.next(this.textSearch);
+   
   }
 }
