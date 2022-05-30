@@ -66,16 +66,19 @@ export class FoodsComponent implements OnInit {
     }
     this.isLoading = true;
     this.foods = this.foods.filter((h) => h !== food);
-    this.foodService.deleteFood(food.id).subscribe();
-    localStorage.setItem(
-      'foods',
-      JSON.stringify(
-        this.foodService.getFoods().subscribe((foods) => {
-          this.foods = foods;
-          this.isLoading = false;
-        })
-      )
-    );
+    this.foodService.deleteFood(food.id).subscribe(() => {
+      localStorage.setItem(
+        'foods',
+        JSON.stringify(
+          this.foodService.getFoods().subscribe((foods) => {
+            this.foods = foods;
+            this.isLoading = false;
+            this.food = null;
+            this.activeIndex = food.id - 1;
+          })
+        )
+      );
+    });
   }
 
   clickEditSubmit(food: Food) {
@@ -86,20 +89,20 @@ export class FoodsComponent implements OnInit {
     if (!newFoods) return;
     // console.log(newFoods);
     newFoods.forEach((newFood) => {
-      const regExp = new RegExp("^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_ ]+$")
-      if(!regExp.test(newFood)) {
-
+      const regExp = new RegExp(
+        '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ ]+$'
+      );
+      if (!regExp.test(newFood)) {
         const dialogRef = this.dialog.open(ModalComponent, {
           width: '350px',
           data: {
             title: 'Input Food(s)',
             message: `Food cannot contain special character - Your input ${newFood}`,
- 
+
             buttonOK: 'Got it',
-           
           },
-        
-        });return
+        });
+        return;
       }
       if (newFood.trim() || newFood.trim() != '') {
         const data = {

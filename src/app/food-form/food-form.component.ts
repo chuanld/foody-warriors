@@ -45,7 +45,7 @@ export class FoodFormComponent implements OnInit, OnChanges {
 
       this.isClickEditSubmit.emit(infFoodEdit);
       this.formEditValue.reset();
-      this.foodIsSelect = '';
+      this.foodIsSelect = null;
       this.onEdit = false;
       return;
     }
@@ -60,26 +60,25 @@ export class FoodFormComponent implements OnInit, OnChanges {
     this.formListFoods.reset();
   }
 
-  // onSubmit1() {
-  //   const values = this.formValues.value;
-  //   // const strValues = values.toString();
-  //   // this.arrFood = values.split(',');
-  //   console.log(values);
-  //   this.isClickSubmit.emit(values);
-  //   this.formValues.reset();
-  // }
-
   showFormControls(form: any) {
     return form && form.controls.name && form.controls.name.value;
   }
 
   formEditValue = this.formBuilder.group({
     id: '',
-    name: ['', [Validators.pattern('^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_ 0-9]+$'), Validators.required]],
+    name: [
+      '',
+      [
+        Validators.pattern(
+          '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ 0-9]+$'
+        ),
+        Validators.required,
+      ],
+    ],
   });
   ngOnInit(): void {
     this.formValues = this.formBuilder.group({
-      name: ['', [ Validators.required]],
+      name: ['', [Validators.required]],
       // order: '',
       // subOrder: '',
     });
@@ -90,8 +89,8 @@ export class FoodFormComponent implements OnInit, OnChanges {
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (this.foodIsSelect) {
       this.formEditValue.patchValue({
-        id: simpleChanges['foodIsSelect'].currentValue.id,
-        name: simpleChanges['foodIsSelect'].currentValue.name,
+        id: simpleChanges['foodIsSelect']?.currentValue.id,
+        name: simpleChanges['foodIsSelect']?.currentValue.name,
       });
 
       this.onEdit = true;

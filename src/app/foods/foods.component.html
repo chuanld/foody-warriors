@@ -1,6 +1,6 @@
 <div class="foods">
   <div class="foods-heading">
-    <span>Manage Foods</span>
+    <span>Manage Foods {{ isLoading }}</span>
   </div>
   <div class="foods-container">
     <div>
@@ -17,24 +17,22 @@
       </div>
       <ul>
         <ng-template ngFor let-food [ngForOf]="foods" let-idx="index">
-        <li (click)="onSelectFood(food, idx)">
-          <a [class.active]="idx === activeIndex">
-            <span class="badge" >{{
-              food.id
-            }}</span>
-            {{ food.name }}
-          </a>
-          <button
-            type="button"
-            class="delete"
-            title="delete food"
-            (click)="openDialog(food)"
-          >
-            x
-          </button>
-        </li>
-      </ng-template>
-        <ng-template [ngIf]="isLoading">
+          <li (click)="onSelectFood(food, idx)">
+            <a [class.active]="idx === activeIndex">
+              <span class="badge">{{ food.id }}</span>
+              {{ food.name }}
+            </a>
+            <button
+              type="button"
+              class="delete"
+              title="delete food"
+              (click)="openDialog(food)"
+            >
+              x
+            </button>
+          </li>
+        </ng-template>
+        <ng-template [ngIf]="isLoading === true">
           <app-loading></app-loading>
         </ng-template>
       </ul>
