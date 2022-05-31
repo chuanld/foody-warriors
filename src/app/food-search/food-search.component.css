@@ -56,8 +56,15 @@ ul.search-result {
   padding-top: 6px;
   display: inline-block;
   margin: 0px 2px;
+  background-color: teal;
+  color: #fff;
 }
 #search-component {
   text-align: center;
   /* display: flex; */
+}
+#search-component .btn-search.disable-btn {
+  background-color: #ddd;
+  color: #000000;
+  cursor: default;
 }

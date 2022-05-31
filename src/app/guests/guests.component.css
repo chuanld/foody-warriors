@@ -142,7 +142,7 @@ button.btn-remove:hover {
   }
 }
 .guests .container {
-  width: 1000px;
+  width: 800px;
   margin: 20px auto;
   display: flex;
   justify-content: center;
@@ -213,10 +213,19 @@ td {
   text-align: center !important;
   /* background-color: red !important; */
   position: relative !important;
-  left: 30rem;
+  left: 23rem;
   /* width: 80px; */
   top: -35px !important;
+
   margin-top: -20px !important;
+  margin-bottom: 10px !important;
+}
+.guests app-loading div {
+  height: 5px !important;
+}
+.guests .container table tbody tr .table-column-styles {
+  display: flex;
+  align-items: center;
 }
 .guests .container table tbody tr.active {
   background-color: rgb(107, 172, 172);

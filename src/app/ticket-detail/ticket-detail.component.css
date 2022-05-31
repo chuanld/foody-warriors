@@ -12,13 +12,15 @@ button {
   margin-right: 0.5rem;
   background-color: teal;
   color: #fff;
-  padding: 1rem;
+  /* padding: 1rem; */
+  padding: 10px 15px;
+  padding-bottom: 5px;
   border-radius: 4px;
   font-size: 1rem;
   text-transform: capitalize;
 }
 button:hover {
-  background-color: #cfd8dc;
+  background-color: rgb(21, 143, 143);
 }
 button:disabled {
   background-color: #eee;

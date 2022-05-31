@@ -65,7 +65,7 @@ export class FoodsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.foods = this.foods.filter((h) => h !== food);
+    // this.foods = this.foods.filter((h) => h !== food);
     this.foodService.deleteFood(food.id).subscribe(() => {
       localStorage.setItem(
         'foods',
@@ -73,8 +73,8 @@ export class FoodsComponent implements OnInit {
           this.foodService.getFoods().subscribe((foods) => {
             this.foods = foods;
             this.isLoading = false;
-            this.food = null;
-            this.activeIndex = food.id - 1;
+            this.food = this.food;
+            // this.activeIndex = food.id - 1;
           })
         )
       );

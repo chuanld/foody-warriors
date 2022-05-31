@@ -88,6 +88,7 @@ export class FoodFormComponent implements OnInit, OnChanges {
   }
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (this.foodIsSelect) {
+      console.log(simpleChanges['foodIsSelect']);
       this.formEditValue.patchValue({
         id: simpleChanges['foodIsSelect']?.currentValue.id,
         name: simpleChanges['foodIsSelect']?.currentValue.name,

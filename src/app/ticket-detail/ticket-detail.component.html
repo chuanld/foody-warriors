@@ -46,14 +46,18 @@
           </mat-form-field>
         </div>
         <div class="guest-info-submit-btn">
+          <button type="button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
           <button
             type="button"
             (click)="save()"
-            [disabled]="guest.name == '' || guest.order == 0"
+            [disabled]="
+              guest.name == '' || guest.order == 0 || !formValues.valid
+            "
           >
-            save
+            <mat-icon>edit</mat-icon>
           </button>
-          <button type="button" (click)="goBack()">back</button>
         </div>
       </form>
     </div>
@@ -72,7 +76,7 @@
         <div *ngIf="guest.order.length > 0; else elseBlock1">
           <ng-template ngFor let-order [ngForOf]="guest.order">
             <div *ngFor="let food of foods">
-              <p *ngIf="food.id == order.id">{{ food.name }},</p>
+              <p *ngIf="food.id == order">{{ food.name }},</p>
             </div>
           </ng-template>
         </div>

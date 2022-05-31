@@ -17,6 +17,12 @@ import { FoodService } from '../food.service';
 import { forkJoin } from 'rxjs';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageSysService } from '../message-sys.service';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -35,7 +41,8 @@ export class TicketDetailComponent implements OnInit, OnChanges {
     private guestService: GuestService,
     private location: Location,
     private formBuilder: FormBuilder,
-    private messageSysService: MessageSysService
+    private messageSysService: MessageSysService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -63,18 +70,23 @@ export class TicketDetailComponent implements OnInit, OnChanges {
       this.guest = guest;
       this.formValues = this.formBuilder.group({
         id: guest.id,
-        name: [guest.name, Validators.required],
+        name: [
+          guest.name,
+          [
+            Validators.pattern(
+              '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW0-9|_ -]+$'
+            ),
+            Validators.required,
+          ],
+        ],
         order: [
+          // [1, 2],
           this.guest.order.map((order) => {
-            return order.id;
+            return order;
           }),
           Validators.required,
         ],
       });
-      let ar = this.guest.order.map((order) => {
-        return order;
-      });
-      console.log(ar);
     });
   }
   goBack(): void {
@@ -83,8 +95,17 @@ export class TicketDetailComponent implements OnInit, OnChanges {
   save(): void {
     if (!this.formValues.valid) return this.log('Form invalid');
     const infHero = { ...this.formValues.value, id: this.guest.id };
-    console.log(infHero);
-    this.guestService.updateGuest(infHero).subscribe(() => this.goBack());
+    this.guestService.updateGuest(infHero).subscribe(() => {
+      const dialogRef = this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: {
+          title: 'Edit Ticket',
+          message: 'Ticket update success',
+          buttonOK: 'OK',
+        },
+      });
+      dialogRef.afterClosed().subscribe(() => this.goBack());
+    });
     // if (this.guest) {
     //   console.log(this.guest);
     //

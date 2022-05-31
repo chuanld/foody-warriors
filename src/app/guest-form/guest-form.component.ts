@@ -25,14 +25,15 @@ export class GuestFormComponent implements OnInit, OnChanges {
   @Output() isClickSubmit = new EventEmitter<Guest>();
   @Input() foods: Food[];
   id: number | 0;
+  formValues: FormGroup;
 
   listFoodsResult: number[];
 
-  formValues: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    order: [[], Validators.required],
-    // subOrder: '',
-  });
+  // formValues: FormGroup = this.formBuilder.group({
+  //   name: ['', Validators.required],
+  //   order: [[], Validators.required],
+  //   // subOrder: '',
+  // });
 
   constructor(
     private route: ActivatedRoute,
@@ -52,10 +53,11 @@ export class GuestFormComponent implements OnInit, OnChanges {
     this.isClickSubmit.emit(infHero);
     this.formValues.reset({
       name: '',
-      order: [],
+      order: [[]],
       // subOrder: '',
     });
   }
+
   // showFormControls(form: any) {
   //   return form && form.controls.name && form.controls.name.value;
   // }
@@ -85,13 +87,12 @@ export class GuestFormComponent implements OnInit, OnChanges {
         [],
         [
           Validators.pattern(
-            '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ ]+$'
+            '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW0-9|_ -]+$'
           ),
           Validators.required,
         ],
       ],
       order: ['', Validators.required],
-      subOrder: '',
     });
     // if (this.id != 0) {
     //   this.formValues. = this.id;

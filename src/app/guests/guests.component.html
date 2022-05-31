@@ -24,14 +24,25 @@
       <tbody>
         <ng-template ngFor let-guest [ngForOf]="guests" let-idx="index">
           <tr [class.active]="idx === activateIndex" (click)="onClickRow(idx)">
-            <td>{{ guest.id }}</td>
+            <td class="table-column-styles">{{ guest.id }}</td>
             <td>{{ guest.name }}</td>
             <ng-template [ngIf]="guest.order.length > 0" [ngIfElse]="elseOrder">
               <td>
-                <ng-template ngFor let-order [ngForOf]="guest.order">
+                <ng-template
+                  ngFor
+                  let-order
+                  [ngForOf]="guest.order"
+                  let-idxFood="index"
+                >
                   <ng-template ngFor let-food [ngForOf]="foods">
                     <ng-template [ngIf]="order == food.id">
-                      {{ food.name }},
+                      <ng-template
+                        [ngIf]="idxFood === guest.order.length - 1"
+                        ;
+                        [ngIfElse]="elseBlock"
+                        >{{ food.name }}.</ng-template
+                      >
+                      <ng-template #elseBlock>{{ food.name }}, </ng-template>
                     </ng-template>
                   </ng-template>
                 </ng-template>

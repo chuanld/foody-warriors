@@ -79,8 +79,20 @@ export class GuestsComponent implements OnInit, OnDestroy {
 
   //submit
   clickSubmit(newGuest: Guest) {
-    this.subscription = this.guestService.addGuest(newGuest).subscribe();
-    this.getData();
+    this.subscription = this.guestService.addGuest(newGuest).subscribe(() => {
+      const dialogRef = this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: {
+          title: 'Create Ticket',
+          message: `Ticket ${newGuest.name} has been created success `,
+          buttonOK: 'OK',
+        },
+      });
+      dialogRef.afterClosed().subscribe((guest) => {
+        this.getData();
+      });
+    });
+
     // console.log(newGuest);
   }
   ngOnDestroy() {

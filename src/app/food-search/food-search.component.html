@@ -6,7 +6,9 @@
     [(ngModel)]="initValue"
     (input)="onInput($event)"
   />
-  <button *ngIf="onSearch" class="btn-search" (click)="handleSearch()">Search</button>
+  <button *ngIf="onSearch" class="btn-search" (click)="handleSearch()">
+    Search
+  </button>
 
   <!-- <ul class="search-result">
     <ng-template [ngIf]="isLoading"> <app-loading></app-loading></ng-template>

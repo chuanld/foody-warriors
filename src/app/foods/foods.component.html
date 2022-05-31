@@ -22,15 +22,15 @@
               <span class="badge">{{ food.id }}</span>
               {{ food.name }}
             </a>
-            <button
-              type="button"
-              class="delete"
-              title="delete food"
-              (click)="openDialog(food)"
-            >
-              x
-            </button>
           </li>
+          <button
+            type="button"
+            class="delete"
+            title="delete food"
+            (click)="openDialog(food)"
+          >
+            x
+          </button>
         </ng-template>
         <ng-template [ngIf]="isLoading">
           <app-loading></app-loading>

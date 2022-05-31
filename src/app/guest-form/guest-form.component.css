@@ -68,3 +68,17 @@ form .submit button {
 .form-group .container-order .mat-chip-list {
   margin: 4px;
 }
+.form-group .container-order .mat-form-field .mat-form-field-flex {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 2px 8px;
+}
+:host
+  ::ng-deep
+  .form-group
+  .container-order
+  .mat-form-field
+  .mat-form-field-appearance-legacy
+  .mat-form-field-underline {
+  display: none !important;
+}

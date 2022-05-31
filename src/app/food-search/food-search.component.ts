@@ -23,7 +23,7 @@ export class FoodSearchComponent implements OnInit {
   initValue: string = '';
   @Output() textChange = new EventEmitter<string>();
   textSearch: string;
-  @Output() onSearch= new EventEmitter<boolean>();
+  @Output() onSearch = new EventEmitter<boolean>();
 
   constructor(private foodService: FoodService) {}
 
@@ -46,16 +46,14 @@ export class FoodSearchComponent implements OnInit {
   }
 
   onInput(e: any) {
-    if(e.target.value.trim()==''){
+    if (e.target.value.trim() == '') {
       // this.onSearch=false;
-      this.onSearch.emit(false)
-     
-     
-    }else this.onSearch.emit(true)
+      this.onSearch.emit(false);
+    } else this.onSearch.emit(true);
+
     this.textSearch = e.target.value;
   }
   handleSearch(): void {
     this.searchTerms.next(this.textSearch);
-   
   }
 }

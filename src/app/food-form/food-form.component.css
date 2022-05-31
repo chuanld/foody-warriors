@@ -49,3 +49,10 @@ button.isDisabled {
   outline: none !important;
   color: #000000;
 }
+.btn-form {
+  text-align: right;
+  margin-right: -15px;
+}
+.btn-form button {
+  padding-bottom: 0px;
+}
