@@ -83,7 +83,15 @@ export class FoodFormComponent implements OnInit, OnChanges {
       // subOrder: '',
     });
     this.formListFoods = this.formBuilder.group({
-      listFood: [[], [Validators.required]],
+      listFood: [
+        [],
+        [
+          Validators.required,
+          Validators.pattern(
+            '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW0-9|_ -]+$'
+          ),
+        ],
+      ],
     });
   }
   ngOnChanges(simpleChanges: SimpleChanges) {
