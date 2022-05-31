@@ -111,10 +111,10 @@ input {
 }
 
 button.delete {
-  position: relative;
+  position: absolute;
 
-  right: -220px;
-  top: -50px;
+  right: -15px;
+  top: -8px;
 
   color: #525252;
   font-size: 1.1rem;
@@ -155,4 +155,8 @@ button.delete:hover {
 
 .foods .foods-container .lds-ellipsis div {
   background-color: #aa8c09 !important;
+}
+.li-food {
+  position: relative;
+  margin: 20px 0px;
 }

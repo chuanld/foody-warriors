@@ -20,6 +20,7 @@ export class FoodsComponent implements OnInit {
   guests: Guest[] = [];
   foods: Food[] = [];
   food: Food;
+  foodTerm: Food;
   isLoading: boolean = false;
   @Input() activeIndex = 0;
 
@@ -52,32 +53,35 @@ export class FoodsComponent implements OnInit {
     });
   }
 
-  delete(food: Food): void {
+  delete(foodDel: Food): void {
     let checkGuest = this.guests.filter(
-      (guest) => guest.order == food.id || guest.subOrder == food.id
+      (guest) => guest.order == foodDel.id || guest.subOrder == foodDel.id
     );
     if (checkGuest.length > 0) {
-      console.log(checkGuest);
       let msg =
         checkGuest.map((g) => ` ${g.name}`) +
         ' ordered this food. Please remove ticket of them first.';
-      window.alert(msg);
+      const dialogRef = this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: {
+          title: 'Delete Food',
+          message: msg,
+          buttonOK: 'Got it',
+        },
+      });
+
       return;
     }
+    const foodTerm = this.food;
+    const ixdAcTerm = this.activeIndex;
     this.isLoading = true;
-    // this.foods = this.foods.filter((h) => h !== food);
-    this.foodService.deleteFood(food.id).subscribe(() => {
-      localStorage.setItem(
-        'foods',
-        JSON.stringify(
-          this.foodService.getFoods().subscribe((foods) => {
-            this.foods = foods;
-            this.isLoading = false;
-            this.food = this.food;
-            // this.activeIndex = food.id - 1;
-          })
-        )
-      );
+    if (foodDel.id === this.food.id) {
+      this.onSelectFood(null, -1);
+    }
+    this.foods = this.foods.filter((h) => h !== foodDel);
+    this.foodService.deleteFood(foodDel.id).subscribe(() => {
+      this.getData();
+      this.onSelectFood(foodTerm, ixdAcTerm);
     });
   }
 
@@ -121,7 +125,9 @@ export class FoodsComponent implements OnInit {
     // this.getData();
   }
   onSelectFood(foodSelect: Food, idx: number) {
+    console.log(foodSelect, idx);
     this.food = foodSelect;
+    this.foodTerm = foodSelect;
     this.activeIndex = idx;
   }
   openDialog(food: Food) {

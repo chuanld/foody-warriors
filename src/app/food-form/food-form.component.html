@@ -64,7 +64,7 @@
         <button
           type="submit"
           class="btn btn-success"
-          (click)="foodIsSelect = ''"
+          (click)="foodIsSelect = null"
         >
           <mat-icon>arrow_back</mat-icon>
         </button>
@@ -74,7 +74,7 @@
           [disabled]="!formEditValue.valid"
           [class.isDisabled]="!formEditValue.valid"
         >
-          <mat-icon>delete</mat-icon>
+          <mat-icon>edit</mat-icon>
         </button>
       </div>
 

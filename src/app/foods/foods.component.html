@@ -17,20 +17,22 @@
       </div>
       <ul>
         <ng-template ngFor let-food [ngForOf]="foods" let-idx="index">
-          <li (click)="onSelectFood(food, idx)">
-            <a [class.active]="idx === activeIndex">
-              <span class="badge">{{ food.id }}</span>
-              {{ food.name }}
-            </a>
-          </li>
-          <button
-            type="button"
-            class="delete"
-            title="delete food"
-            (click)="openDialog(food)"
-          >
-            x
-          </button>
+          <div class="li-food">
+            <li (click)="onSelectFood(food, idx)">
+              <a [class.active]="idx === activeIndex">
+                <span class="badge">{{ food.id }}</span>
+                {{ food.name }}
+              </a>
+            </li>
+            <button
+              type="button"
+              class="delete"
+              title="delete food"
+              (click)="openDialog(food)"
+            >
+              x
+            </button>
+          </div>
         </ng-template>
         <ng-template [ngIf]="isLoading">
           <app-loading></app-loading>

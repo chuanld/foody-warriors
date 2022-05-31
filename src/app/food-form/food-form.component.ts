@@ -24,7 +24,7 @@ import { MessageSysService } from '../message-sys.service';
   styleUrls: ['./food-form.component.css'],
 })
 export class FoodFormComponent implements OnInit, OnChanges {
-  @Input() foodIsSelect: Food | any;
+  @Input() foodIsSelect: Food;
   @Output() isClickSubmit = new EventEmitter<any>();
   @Output() isClickEditSubmit = new EventEmitter<Food>();
   @Input() foods: Array<Food>;
@@ -88,10 +88,14 @@ export class FoodFormComponent implements OnInit, OnChanges {
   }
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (this.foodIsSelect) {
-      console.log(simpleChanges['foodIsSelect']);
+      console.log(this.foodIsSelect);
       this.formEditValue.patchValue({
-        id: simpleChanges['foodIsSelect']?.currentValue.id,
-        name: simpleChanges['foodIsSelect']?.currentValue.name,
+        id:
+          simpleChanges['foodIsSelect']?.currentValue.id ||
+          this.foodIsSelect.id,
+        name:
+          simpleChanges['foodIsSelect']?.currentValue.name ||
+          this.foodIsSelect.name,
       });
 
       this.onEdit = true;
