@@ -37,10 +37,11 @@ export class DashboardComponent implements OnInit {
       const regularExp = new RegExp(
         '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_ ]+$'
       );
-      if (!regularExp.test(searchTerm.trim())) {
-        this.popupErr('Search Food', 'please do not type special character');
-        return null;
-      }
+      // if (!regularExp.test(searchTerm.trim())) {
+      //   this.popupErr('Search Food', 'please do not type special character');
+      //   this.getFoods();
+      //   return null;
+      // }
       if (
         searchTerm.trim().length == 0 ||
         !searchTerm ||
@@ -52,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
       return this.foodService.searchFoods(searchTerm.trim()).pipe(
         map((data) => {
-          if (data.length === 0) {
+          if (data.length === 0 || !regularExp.test(searchTerm.trim())) {
             this.popupErr('Search Food', 'Oops..., food not found');
             this.getFoods();
             return null;
@@ -62,10 +63,6 @@ export class DashboardComponent implements OnInit {
         })
       );
     })
-    // catchError((errorResponse) => {
-    //   console.error(errorResponse);
-    //   return of(this.popupErr('ass', 'sas'));
-    // })
   );
 
   popupErr(title: string, message: string) {

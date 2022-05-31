@@ -1,13 +1,13 @@
 <div *ngIf="guest" class="guest-detail">
   <div class="guest-detail-heading">
-    <h2>Ticket's {{ guest.name | uppercase }}</h2>
+    <h2>{{ guest.name | uppercase }}'s Ticket</h2>
   </div>
 
   <div class="guest-detail-info">
     <div class="guest-edit">
       <form [formGroup]="formValues" (ngSubmit)="onSubmit()">
         <div class="guest-detail-edit-show">
-          <label>id: </label>
+          <label>ID: </label>
 
           <input id="guest-id" [value]="guest.id" placeholder="id" disabled />
         </div>
@@ -63,7 +63,7 @@
     </div>
     <div class="guest-info">
       <div class="guest-detail-info-show">
-        <label>id: </label>
+        <label>ID: </label>
         <p>{{ guest.id }}</p>
       </div>
       <div class="guest-detail-info-show">
@@ -73,11 +73,36 @@
       <div class="guest-detail-info-show info-orderlist">
         <label for="guest-order">Order: </label>
 
-        <div *ngIf="guest.order.length > 0; else elseBlock1">
+        <!-- <div *ngIf="guest.order.length > 0; else elseBlock1">
           <ng-template ngFor let-order [ngForOf]="guest.order">
+            <ng-template [ngIf]="order==food.id"></ng-template>
             <div *ngFor="let food of foods">
               <p *ngIf="food.id == order">{{ food.name }},</p>
             </div>
+          </ng-template>
+        </div> -->
+        <div *ngIf="guest.order.length > 0; else elseBlock1">
+          <ng-template
+            ngFor
+            let-order
+            [ngForOf]="guest.order"
+            let-idxFood="index"
+          >
+            <ng-template ngFor let-food [ngForOf]="foods">
+              <ng-template [ngIf]="order == food.id">
+                <div>
+                  <p>
+                    <ng-template
+                      [ngIf]="idxFood === guest.order.length - 1"
+                      ;
+                      [ngIfElse]="elseBlock"
+                      >{{ food.name }}.</ng-template
+                    >
+                    <ng-template #elseBlock>{{ food.name }},</ng-template>
+                  </p>
+                </div>
+              </ng-template>
+            </ng-template>
           </ng-template>
         </div>
         <ng-template #elseBlock1

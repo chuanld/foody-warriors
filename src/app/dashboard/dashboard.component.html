@@ -10,7 +10,7 @@
     <div class="guests-menu">
       <a
         *ngFor="let food of foods"
-        routerLink="/guests/{{ food.id }}"
+        routerLink="/foods/{{ food.id }}"
         (click)="onClickFood(food.id)"
       >
         {{ food.name }}
@@ -19,7 +19,7 @@
     <div class="guests-menu">
       <a
         *ngFor="let result of results$ | async"
-        routerLink="/guests/{{ result.id }}"
+        routerLink="/foods/{{ result.id }}"
       >
         {{ result.name }}
       </a>

@@ -235,3 +235,6 @@ td {
 .guests .container table tbody tr.active .btn-edit {
   background-color: rgb(5, 111, 199);
 }
+a:active {
+  background-color: transparent !important;
+}

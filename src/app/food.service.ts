@@ -30,6 +30,13 @@ export class FoodService {
       catchError(this.handleError<Food[]>('get-foods', []))
     );
   }
+  getFoodById(id: number): Observable<Food> {
+    const url = `${this.foodsUrl}/${id}`;
+    return this.http.get<Food>(url).pipe(
+      tap((food) => this.log(`fetched food id=${food.id}`)),
+      catchError(this.handleError<Food>(`get-foodById id=${id}`))
+    );
+  }
   addFood(food: any): Observable<any> {
     return this.http.post<any>(this.foodsUrl, food, this.httpOptions).pipe(
       tap((newFood: Food) =>

@@ -10,6 +10,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-foods',
@@ -23,7 +24,7 @@ export class FoodsComponent implements OnInit {
   foodTerm: Food;
   isLoading: boolean = false;
   @Input() activeIndex = -1;
-
+  id: number = 0;
   //dialog
   title: string;
   message: string;
@@ -31,11 +32,18 @@ export class FoodsComponent implements OnInit {
   constructor(
     private guestService: GuestService,
     private foodService: FoodService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getData();
+    this.id = this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id > 0) {
+      this.foodService
+        .getFoodById(this.id)
+        .subscribe((food) => (this.food = food));
+    }
   }
 
   //GetData
@@ -50,6 +58,11 @@ export class FoodsComponent implements OnInit {
       this.guests = guests;
       localStorage.setItem('guests', JSON.stringify(guests));
       this.isLoading = false;
+      foods.forEach((food, idx) => {
+        if (food.id === this.id) {
+          this.activeIndex = idx;
+        }
+      });
     });
   }
 

@@ -82,3 +82,6 @@ form .submit button {
   .mat-form-field-underline {
   display: none !important;
 }
+a:active {
+  background-color: transparent !important;
+}

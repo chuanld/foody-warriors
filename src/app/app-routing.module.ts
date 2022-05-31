@@ -25,6 +25,10 @@ const routes: Routes = [
     component: FoodsComponent,
   },
   {
+    path: 'foods/:id',
+    component: FoodsComponent,
+  },
+  {
     path: 'detail/:id',
     component: TicketDetailComponent,
   },
