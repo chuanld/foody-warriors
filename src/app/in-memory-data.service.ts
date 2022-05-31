@@ -7,6 +7,8 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
+    // localStorage.removeItem('guests')
+    // localStorage.removeItem('foods')
     const guests: any = [
       {
         id: 1,

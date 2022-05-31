@@ -22,7 +22,7 @@ export class FoodsComponent implements OnInit {
   food: Food;
   foodTerm: Food;
   isLoading: boolean = false;
-  @Input() activeIndex = 0;
+  @Input() activeIndex = -1;
 
   //dialog
   title: string;
@@ -77,7 +77,13 @@ export class FoodsComponent implements OnInit {
     this.isLoading = true;
     if (foodDel.id === this.food.id) {
       this.onSelectFood(null, -1);
+      this.foods = this.foods.filter((h) => h !== foodDel);
+      this.foodService.deleteFood(foodDel.id).subscribe(() => {
+        this.getData();
+      });
+      return;
     }
+
     this.foods = this.foods.filter((h) => h !== foodDel);
     this.foodService.deleteFood(foodDel.id).subscribe(() => {
       this.getData();
