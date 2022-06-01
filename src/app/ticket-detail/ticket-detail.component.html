@@ -4,7 +4,7 @@
   </div>
 
   <div class="guest-detail-info">
-    <div class="guest-edit">
+    <div class="guest-edit" *ngIf="!isHideEdit">
       <form [formGroup]="formValues" (ngSubmit)="onSubmit()">
         <div class="guest-detail-edit-show">
           <label>ID: </label>

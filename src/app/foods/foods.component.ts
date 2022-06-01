@@ -53,7 +53,7 @@ export class FoodsComponent implements OnInit {
     let guests = this.guestService.getGuestsData();
 
     forkJoin([foods, guests]).subscribe(([foods, guests]) => {
-      this.foods = foods;
+      this.foods = JSON.parse(JSON.stringify(foods)).reverse();
       localStorage.setItem('foods', JSON.stringify(foods));
       this.guests = guests;
       localStorage.setItem('guests', JSON.stringify(guests));
@@ -85,14 +85,22 @@ export class FoodsComponent implements OnInit {
 
       return;
     }
-    const foodTerm = this.food;
-    const ixdAcTerm = this.activeIndex;
+    const foodTerm = this.food || null;
+    const ixdAcTerm = this.activeIndex || -1;
     this.isLoading = true;
-    if (foodDel.id === this.food.id) {
+    if (foodDel.id === this.food?.id) {
       this.onSelectFood(null, -1);
       this.foods = this.foods.filter((h) => h !== foodDel);
       this.foodService.deleteFood(foodDel.id).subscribe(() => {
         this.getData();
+        this.dialog.open(ModalComponent, {
+          width: '350px',
+          data: {
+            title: 'Delete Food',
+            message: `Delete ${foodDel.name} success`,
+            buttonOK: 'OK',
+          },
+        });
       });
       return;
     }
@@ -100,7 +108,16 @@ export class FoodsComponent implements OnInit {
     this.foods = this.foods.filter((h) => h !== foodDel);
     this.foodService.deleteFood(foodDel.id).subscribe(() => {
       this.getData();
-      this.onSelectFood(foodTerm, ixdAcTerm);
+      console.log('asdd');
+      this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: {
+          title: 'Delete Food',
+          message: `Delete ${foodDel.name} success`,
+          buttonOK: 'OK',
+        },
+      });
+      this.onSelectFood(foodTerm, ixdAcTerm - 1);
     });
   }
 

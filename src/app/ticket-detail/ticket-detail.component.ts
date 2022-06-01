@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Guest } from '../guest';
 import { Food } from '../food';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { GuestService } from '../guest.service';
@@ -34,6 +34,7 @@ export class TicketDetailComponent implements OnInit, OnChanges {
   foods: Food[] | [];
   formValues: FormGroup;
   listOrderUpdate;
+  isHideEdit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +48,9 @@ export class TicketDetailComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getData();
+    if (this.route.snapshot.url[0].path === 'ticket-detail') {
+      this.isHideEdit = true;
+    } else this.isHideEdit = false;
 
     // var al = this.guest.order.reduce((order) => {
     //   return order.id;
@@ -63,6 +67,7 @@ export class TicketDetailComponent implements OnInit, OnChanges {
   getData(): void {
     let foods = this.foodService.getFoods();
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log(this.route.snapshot.url[0]);
     let guest = this.guestService.getGuestById(id);
 
     forkJoin([foods, guest]).subscribe(([foods, guest]) => {

@@ -7,6 +7,7 @@ import { GuestService } from '../guest.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-guests',
@@ -23,11 +24,13 @@ export class GuestsComponent implements OnInit, OnDestroy {
   constructor(
     private guestService: GuestService,
     private foodService: FoodService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getFoodTest();
+    // this.getFoodTest();
     this.getData();
   }
 
@@ -41,7 +44,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
       ([foods, guests]) => {
         this.foods = foods;
         localStorage.setItem('foods', JSON.stringify(foods));
-        this.guests = guests;
+        this.guests = JSON.parse(JSON.stringify(guests)).reverse();
         localStorage.setItem('guests', JSON.stringify(guests));
         this.isLoading = false;
       }
@@ -64,16 +67,27 @@ export class GuestsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((guest) => {
       if (!guest) return;
       this.isLoading = true;
-      this.subscription = this.guestService.deleteGuest(guest.id).subscribe();
-      localStorage.setItem(
-        'guests',
-        JSON.stringify(
-          this.guestService.getGuestsData().subscribe((guests) => {
-            this.guests = guests;
-            this.isLoading = false;
-          })
-        )
-      );
+      this.subscription = this.guestService
+        .deleteGuest(guest.id)
+        .subscribe(() => {
+          localStorage.setItem(
+            'guests',
+            JSON.stringify(
+              this.guestService.getGuestsData().subscribe((guests) => {
+                this.guests = guests;
+                this.isLoading = false;
+                this.dialog.open(ModalComponent, {
+                  width: '350px',
+                  data: {
+                    title: 'Delete ticket',
+                    message: `Delete ${guest.name} success`,
+                    buttonOK: 'OK',
+                  },
+                });
+              })
+            )
+          );
+        });
     });
   }
 
@@ -105,7 +119,8 @@ export class GuestsComponent implements OnInit, OnDestroy {
       .getTestFoods()
       .subscribe((data) => console.log(data));
   }
-  onClickRow(idx: number) {
+  onClickRow(idx: number, id: number) {
     this.activateIndex = idx;
+    this.router.navigate([`/ticket-detail/${id}`], { relativeTo: this.route });
   }
 }

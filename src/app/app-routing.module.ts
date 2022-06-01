@@ -29,7 +29,11 @@ const routes: Routes = [
     component: FoodsComponent,
   },
   {
-    path: 'detail/:id',
+    path: 'ticket-edit/:id',
+    component: TicketDetailComponent,
+  },
+  {
+    path: 'ticket-detail/:id',
     component: TicketDetailComponent,
   },
 ];

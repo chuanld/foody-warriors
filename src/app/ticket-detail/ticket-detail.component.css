@@ -38,7 +38,7 @@ button:disabled {
 }
 .guest-detail-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
 }
 .guest-detail-info .guest-info {

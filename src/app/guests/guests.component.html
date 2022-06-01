@@ -23,11 +23,13 @@
       </thead>
       <tbody>
         <ng-template ngFor let-guest [ngForOf]="guests" let-idx="index">
-          <tr [class.active]="idx === activateIndex" (click)="onClickRow(idx)">
-            <td class="table-column-styles">{{ guest.id }}</td>
+          <tr [class.active]="idx === activateIndex">
+            <td class="table-column-styles" (click)="onClickRow(idx, guest.id)">
+              {{ guest.id }}
+            </td>
             <td>{{ guest.name }}</td>
             <ng-template [ngIf]="guest.order.length > 0" [ngIfElse]="elseOrder">
-              <td>
+              <td (click)="onClickRow(idx, guest.id)">
                 <ng-template
                   ngFor
                   let-order
@@ -49,32 +51,18 @@
               </td>
             </ng-template>
             <ng-template #elseOrder>
-              <td>
+              <td (click)="onClickRow(idx, guest.id)">
                 <i>None</i>
               </td>
             </ng-template>
-            <!-- <ng-template
-              [ngIf]="guest.subOrder * 1 >= 1"
-              [ngIfElse]="elseSubOrder"
-            >
-              <ng-template ngFor let-food [ngForOf]="foods">
-                <td *ngIf="food.id == guest.subOrder">
-                  {{ food.name }}
-                </td>
-              </ng-template>
-            </ng-template>
-            <ng-template #elseSubOrder
-              ><td>
-                <i>None</i>
-              </td></ng-template
-            > -->
+
             <td>
               <div class="row">
-                <a routerLink="/detail/{{ guest.id }}">
-                  <button class="btn-edit">
+                <button class="btn-edit">
+                  <a routerLink="/ticket-edit/{{ guest.id }}">
                     <mat-icon>mode</mat-icon>
-                  </button>
-                </a>
+                  </a>
+                </button>
 
                 <button class="btn-remove" (click)="delete(guest)">
                   <mat-icon>delete</mat-icon>
