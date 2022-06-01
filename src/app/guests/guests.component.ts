@@ -74,7 +74,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
             'guests',
             JSON.stringify(
               this.guestService.getGuestsData().subscribe((guests) => {
-                this.guests = guests;
+                this.guests = JSON.parse(JSON.stringify(guests)).reverse();
                 this.isLoading = false;
                 this.dialog.open(ModalComponent, {
                   width: '350px',
