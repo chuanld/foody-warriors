@@ -44,7 +44,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
       ([foods, guests]) => {
         this.foods = foods;
         localStorage.setItem('foods', JSON.stringify(foods));
-        this.guests = JSON.parse(JSON.stringify(guests)).reverse();
+        this.guests = guests;
         localStorage.setItem('guests', JSON.stringify(guests));
         this.isLoading = false;
       }
@@ -74,7 +74,7 @@ export class GuestsComponent implements OnInit, OnDestroy {
             'guests',
             JSON.stringify(
               this.guestService.getGuestsData().subscribe((guests) => {
-                this.guests = JSON.parse(JSON.stringify(guests)).reverse();
+                this.guests = guests;
                 this.isLoading = false;
                 this.dialog.open(ModalComponent, {
                   width: '350px',
@@ -93,21 +93,31 @@ export class GuestsComponent implements OnInit, OnDestroy {
 
   //submit
   clickSubmit(newGuest: Guest) {
-    this.subscription = this.guestService.addGuest(newGuest).subscribe(() => {
-      const dialogRef = this.dialog.open(ModalComponent, {
-        width: '350px',
-        data: {
-          title: 'Create Ticket',
-          message: `Ticket ${newGuest.name} has been created success `,
-          buttonOK: 'OK',
-        },
+    this.subscription = this.guestService
+      .addGuest(newGuest)
+      .subscribe((guest) => {
+        this.guests.unshift(guest);
+        const dialogRef = this.dialog.open(ModalComponent, {
+          width: '350px',
+          data: {
+            title: 'Create Ticket',
+            message: `Ticket ${newGuest.name} has been created success `,
+            buttonOK: 'OK',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+          console.log(this.guests);
+          this.saveLocal();
+          // this.getData();
+        });
       });
-      dialogRef.afterClosed().subscribe((guest) => {
-        this.getData();
-      });
-    });
 
     // console.log(newGuest);
+  }
+  saveLocal() {
+    this.guestService.getGuestsData().subscribe((guests) => {
+      localStorage.setItem('guests', JSON.stringify(guests));
+    });
   }
   ngOnDestroy() {
     if (this.subscription) {

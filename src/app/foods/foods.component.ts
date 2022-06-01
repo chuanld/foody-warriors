@@ -37,13 +37,13 @@ export class FoodsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getData();
     this.id = this.id = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id > 0) {
       this.foodService
         .getFoodById(this.id)
         .subscribe((food) => (this.food = food));
     }
+    this.getData();
   }
 
   //GetData
@@ -53,7 +53,7 @@ export class FoodsComponent implements OnInit {
     let guests = this.guestService.getGuestsData();
 
     forkJoin([foods, guests]).subscribe(([foods, guests]) => {
-      this.foods = JSON.parse(JSON.stringify(foods)).reverse();
+      this.foods = foods;
       localStorage.setItem('foods', JSON.stringify(foods));
       this.guests = guests;
       localStorage.setItem('guests', JSON.stringify(guests));
@@ -104,7 +104,23 @@ export class FoodsComponent implements OnInit {
       });
       return;
     }
-
+    if (foodDel.id < this.food?.id) {
+      this.foods = this.foods.filter((h) => h !== foodDel);
+      this.foodService.deleteFood(foodDel.id).subscribe(() => {
+        this.getData();
+        console.log('asdd');
+        this.dialog.open(ModalComponent, {
+          width: '350px',
+          data: {
+            title: 'Delete Food',
+            message: `Delete ${foodDel.name} success`,
+            buttonOK: 'OK',
+          },
+        });
+        this.onSelectFood(foodTerm, ixdAcTerm - 1);
+      });
+      return;
+    }
     this.foods = this.foods.filter((h) => h !== foodDel);
     this.foodService.deleteFood(foodDel.id).subscribe(() => {
       this.getData();
@@ -117,13 +133,23 @@ export class FoodsComponent implements OnInit {
           buttonOK: 'OK',
         },
       });
-      this.onSelectFood(foodTerm, ixdAcTerm - 1);
+      this.onSelectFood(foodTerm, ixdAcTerm);
     });
   }
 
   clickEditSubmit(food: Food) {
     console.log(food);
-    this.foodService.updateFood(food).subscribe(() => this.getData());
+    this.foodService.updateFood(food).subscribe(() => {
+      this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: {
+          title: 'Edit Food',
+          message: `Update success ${food.name}`,
+          buttonOK: 'OK',
+        },
+      });
+      this.getData();
+    });
   }
   clickSubmit(newFoods) {
     if (!newFoods) return;
@@ -131,6 +157,7 @@ export class FoodsComponent implements OnInit {
     const regExp = new RegExp(
       '^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW0-9|_ -]+$'
     );
+    let foodSuccess = [];
     newFoods.forEach((newFood) => {
       if (!regExp.test(newFood)) {
         const dialogRef = this.dialog.open(ModalComponent, {
@@ -144,16 +171,29 @@ export class FoodsComponent implements OnInit {
         });
         return;
       }
+
       if (newFood.trim() || newFood.trim() != '') {
         const data = {
           name: newFood,
         };
+        foodSuccess.push(data);
         this.foodService.addFood(data).subscribe((food) => {
-          this.foods.push(food);
+          this.foods.unshift(food);
         });
       }
     });
-    this.getData();
+    console.log(foodSuccess);
+    let msg = foodSuccess.map((g) => ` ${g.name}`) + ' has been created.';
+    this.dialog.open(ModalComponent, {
+      width: '350px',
+      data: {
+        title: 'Edit Food',
+        message: msg,
+        buttonOK: 'OK',
+      },
+    });
+    this.saveLocal();
+    // this.getData();
     // console.log(newFoods);
     // this.foodService.addFood(newFood).subscribe((food) => {
     //   this.foods.push(food);
@@ -168,7 +208,7 @@ export class FoodsComponent implements OnInit {
   }
   openDialog(food: Food) {
     this.title = 'Delete Confirm';
-    this.message = `Are you sure  delete ${food.name} id: ${food.id}`;
+    this.message = `Are you sure  delete ${food.name} ?`;
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '350px',
       data: {
@@ -182,6 +222,11 @@ export class FoodsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((food) => {
       if (!food) return;
       this.delete(food);
+    });
+  }
+  saveLocal() {
+    this.foodService.getFoods().subscribe((foods) => {
+      localStorage.setItem('foods', JSON.stringify(foods));
     });
   }
 }

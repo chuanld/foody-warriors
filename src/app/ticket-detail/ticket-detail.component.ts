@@ -101,7 +101,7 @@ export class TicketDetailComponent implements OnInit, OnChanges {
     if (!this.formValues.valid) return this.log('Form invalid');
     const infHero = { ...this.formValues.value, id: this.guest.id };
     this.guestService.updateGuest(infHero).subscribe(() => {
-      const dialogRef = this.dialog.open(ModalComponent, {
+      this.dialog.open(ModalComponent, {
         width: '350px',
         data: {
           title: 'Edit Ticket',
@@ -109,7 +109,6 @@ export class TicketDetailComponent implements OnInit, OnChanges {
           buttonOK: 'OK',
         },
       });
-      dialogRef.afterClosed().subscribe(() => this.goBack());
     });
     // if (this.guest) {
     //   console.log(this.guest);

@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         <ng-template ngFor let-guest [ngForOf]="guests" let-idx="index">
-          <tr [class.active]="idx === activateIndex">
+          <tr>
             <td class="table-column-styles" (click)="onClickRow(idx, guest.id)">
               {{ guest.id }}
             </td>
